@@ -26,9 +26,14 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpGet("{id}", Name = "GetMovieById")]
-        public Movie GetMovieById(int id)
+        public IActionResult GetMovieById(int id)
         {
             var movie = movies.FirstOrDefault(movie => movie.Id == id);
+            
+            if (movie == null)
+                return NotFound();
+                
+            return Ok(movie);
         }
     }
 }
