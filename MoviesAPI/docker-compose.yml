@@ -1,0 +1,31 @@
+﻿services:
+  database:
+    image: postgres
+    container_name: movies_database
+    restart: always
+    ports:
+      - 5432:5432
+    environment: 
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=MoviesDB
+    volumes:
+      - pgdata:/data/postgres
+      
+  api: 
+    build: .
+    container_name: movies_api
+    restart: always
+    ports: 
+      - 443:443
+      - 80:80
+    volumes:
+      - .:/usr/app
+    links:
+      - database
+    depends_on: 
+      - database
+
+volumes:
+  pgdata:
+    driver: local
