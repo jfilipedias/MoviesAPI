@@ -19,10 +19,10 @@ namespace MoviesAPI.Controllers
             return CreatedAtAction(nameof(GetMovieById), new { Id = movie.Id }, movie);
         }
 
-        [HttpGet(Name = "GetMovie")]
-        public IEnumerable<Movie> GetAllMovies()
+        [HttpGet(Name = "GetMovies")]
+        public IActionResult GetAllMovies()
         {
-            return movies;
+            return Ok(movies);
         }
 
         [HttpGet("{id}", Name = "GetMovieById")]
