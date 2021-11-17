@@ -22,5 +22,11 @@ namespace MoviesAPI.Controllers
         {
             return movies;
         }
+
+        [HttpGet("{id}", Name = "GetMovieById")]
+        public Movie GetMovieById(int id)
+        {
+            return movies.FirstOrDefault(movie => movie.Id == id);
+        }
     }
 }
