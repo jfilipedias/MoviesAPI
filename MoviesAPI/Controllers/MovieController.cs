@@ -7,11 +7,13 @@ namespace MoviesAPI.Controllers
     [Route("[controller]")]
     public class MovieController : ControllerBase
     {
+        private static int id = 0;
         private static List<Movie> movies = new List<Movie>();
 
         [HttpPost(Name = "PostMovie")]
         public void AddMovie([FromBody] Movie movie)
         {
+            movie.Id = id++;
             movies.Add(movie);
         }
     }
