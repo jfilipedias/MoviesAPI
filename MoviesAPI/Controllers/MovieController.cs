@@ -16,5 +16,11 @@ namespace MoviesAPI.Controllers
             movie.Id = id++;
             movies.Add(movie);
         }
+
+        [HttpGet(Name = "GetMovie")]
+        public IEnumerable<Movie> GetAllMovies()
+        {
+            return movies;
+        }
     }
 }
