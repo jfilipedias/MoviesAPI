@@ -58,5 +58,19 @@ namespace MoviesAPI.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete(Name = "DeleteMovie")]
+        public IActionResult DeleteMovie(int id)
+        {
+            var movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
+
+            if (movie == null)
+                return NotFound();
+
+            _context.Remove(movie);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
