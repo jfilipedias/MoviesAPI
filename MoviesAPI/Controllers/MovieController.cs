@@ -40,5 +40,23 @@ namespace MoviesAPI.Controllers
                 
             return Ok(movie);
         }
+
+        [HttpPut("{id}", Name = "UpdateMovie")]
+        public IActionResult UpdateMovie(int id, [FromBody] Movie newMovie) 
+        {
+            var movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
+
+            if (movie == null)
+                return NotFound();
+
+            movie.Title = newMovie.Title;
+            movie.Director = newMovie.Director;
+            movie.Genre = newMovie.Genre;
+            movie.Duration = newMovie.Duration;
+
+            _context.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
