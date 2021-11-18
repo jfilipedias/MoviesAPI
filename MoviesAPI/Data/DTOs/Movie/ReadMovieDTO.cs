@@ -2,9 +2,9 @@
 
 namespace MoviesAPI.Data.DTOs.Movie
 {
-    public class ReadMovieDTO
+    public class ReadMovieDto
     {
-        public ReadMovieDTO()
+        public ReadMovieDto()
         {
             QueryTime = DateTime.Now;
         }

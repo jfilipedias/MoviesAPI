@@ -20,7 +20,7 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpPost(Name = "PostMovie")]
-        public IActionResult AddMovie([FromBody] CreateMovieDTO movieDTO)
+        public IActionResult AddMovie([FromBody] CreateMovieDto movieDTO)
         {
             var movie = _mapper.Map<Movie>(movieDTO);
 
@@ -44,13 +44,13 @@ namespace MoviesAPI.Controllers
             if (movie == null)
                 return NotFound();
 
-            var movieDTO = _mapper.Map<ReadMovieDTO>(movie);
+            var movieDTO = _mapper.Map<ReadMovieDto>(movie);
                 
             return Ok(movieDTO);
         }
 
         [HttpPut("{id}", Name = "UpdateMovie")]
-        public IActionResult UpdateMovie(int id, [FromBody] UpdateMovieDTO movieDTO) 
+        public IActionResult UpdateMovie(int id, [FromBody] UpdateMovieDto movieDTO) 
         {
             var movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
 

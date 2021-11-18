@@ -2,7 +2,7 @@
 
 namespace MoviesAPI.Data.DTOs.Movie
 {
-    public class CreateMovieDTO
+    public class CreateMovieDto
     {
         [Required(ErrorMessage = "The title field is required.")]
         public string Title { get; set; }
