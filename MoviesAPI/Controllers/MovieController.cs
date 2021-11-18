@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Data;
-using MoviesAPI.Data.DTOs.Movie;
+using MoviesAPI.Data.Dtos.Movie;
 using MoviesAPI.Models;
 
 namespace MoviesAPI.Controllers
@@ -45,7 +45,6 @@ namespace MoviesAPI.Controllers
                 return NotFound();
 
             var movieDTO = _mapper.Map<ReadMovieDto>(movie);
-                
             return Ok(movieDTO);
         }
 
@@ -58,7 +57,6 @@ namespace MoviesAPI.Controllers
                 return NotFound();
 
             _mapper.Map(movieDTO, movie);
-            
             _context.SaveChanges();
 
             return NoContent();
