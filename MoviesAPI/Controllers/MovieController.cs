@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Data;
 using MoviesAPI.Data.DTOs.Movie;
 using MoviesAPI.Models;
@@ -10,22 +11,18 @@ namespace MoviesAPI.Controllers
     public class MovieController : ControllerBase
     {
         private MovieContext _context;
+        private IMapper _mapper;
 
-        public MovieController(MovieContext context)
+        public MovieController(MovieContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpPost(Name = "PostMovie")]
         public IActionResult AddMovie([FromBody] CreateMovieDTO movieDTO)
         {
-            var movie = new Movie
-            {
-                Title = movieDTO.Title,
-                Director = movieDTO.Director,
-                Genre = movieDTO.Genre,
-                Duration = movieDTO.Duration
-            };
+            var movie = _mapper.Map<Movie>(movieDTO);
 
             _context.Movies.Add(movie);
             _context.SaveChanges();
@@ -47,37 +44,27 @@ namespace MoviesAPI.Controllers
             if (movie == null)
                 return NotFound();
 
-            var movieDTO = new ReadMovieDTO
-            {
-                Id = movie.Id,
-                Title = movie.Title,
-                Director = movie.Director,
-                Genre = movie.Genre,
-                Duration = movie.Duration,
-            };
+            var movieDTO = _mapper.Map<ReadMovieDTO>(movie);
                 
             return Ok(movieDTO);
         }
 
         [HttpPut("{id}", Name = "UpdateMovie")]
-        public IActionResult UpdateMovie(int id, [FromBody] UpdateMovieDTO movieDto) 
+        public IActionResult UpdateMovie(int id, [FromBody] UpdateMovieDTO movieDTO) 
         {
             var movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
 
             if (movie == null)
                 return NotFound();
 
-            movie.Title = movieDto.Title;
-            movie.Director = movieDto.Director;
-            movie.Genre = movieDto.Genre;
-            movie.Duration = movieDto.Duration;
-
+            _mapper.Map(movieDTO, movie);
+            
             _context.SaveChanges();
 
             return NoContent();
         }
 
-        [HttpDelete(Name = "DeleteMovie")]
+        [HttpDelete("{id}", Name = "DeleteMovie")]
         public IActionResult DeleteMovie(int id)
         {
             var movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
