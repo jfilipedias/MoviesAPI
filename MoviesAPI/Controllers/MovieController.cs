@@ -6,14 +6,14 @@ using MoviesAPI.Models;
 
 namespace MoviesAPI.Controllers
 {
-    [ApiController]
     [Route("[controller]")]
+    [ApiController]
     public class MovieController : ControllerBase
     {
-        private MovieContext _context;
+        private AppDbContext _context;
         private IMapper _mapper;
 
-        public MovieController(MovieContext context, IMapper mapper)
+        public MovieController(AppDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
