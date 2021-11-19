@@ -31,7 +31,7 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAddress()
+        public IActionResult GetAllAddresses()
         {
             return Ok(_context.Addresses);
         }
@@ -48,7 +48,7 @@ namespace MoviesAPI.Controllers
             return Ok(readAddressDto);
         }
 
-        [HttpGet("{id}")]
+        [HttpPut("{id}")]
         public IActionResult UpdateAddress(int id, [FromBody] UpdateAddressDto updateAddressDto)
         {
             var address = _context.Addresses.FirstOrDefault(address => address.Id == id);
