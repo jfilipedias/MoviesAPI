@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Data;
+using MoviesAPI.Data.Dtos.Address;
+using MoviesAPI.Models;
 
 namespace MoviesAPI.Controllers
 {
