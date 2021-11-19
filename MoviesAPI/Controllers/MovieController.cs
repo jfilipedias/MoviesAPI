@@ -19,10 +19,10 @@ namespace MoviesAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost(Name = "PostMovie")]
-        public IActionResult AddMovie([FromBody] CreateMovieDto movieDTO)
+        [HttpPost]
+        public IActionResult CreateMovie([FromBody] CreateMovieDto createMovieDTO)
         {
-            var movie = _mapper.Map<Movie>(movieDTO);
+            var movie = _mapper.Map<Movie>(createMovieDTO);
 
             _context.Movies.Add(movie);
             _context.SaveChanges();
@@ -30,13 +30,13 @@ namespace MoviesAPI.Controllers
             return CreatedAtAction(nameof(GetMovieById), new { Id = movie.Id }, movie);
         }
 
-        [HttpGet(Name = "GetMovies")]
+        [HttpGet]
         public IActionResult GetAllMovies()
         {
             return Ok(_context.Movies);
         }
 
-        [HttpGet("{id}", Name = "GetMovieById")]
+        [HttpGet("{id}")]
         public IActionResult GetMovieById(int id)
         {
             var movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
@@ -48,21 +48,21 @@ namespace MoviesAPI.Controllers
             return Ok(movieDTO);
         }
 
-        [HttpPut("{id}", Name = "UpdateMovie")]
-        public IActionResult UpdateMovie(int id, [FromBody] UpdateMovieDto movieDTO) 
+        [HttpPut("{id}")]
+        public IActionResult UpdateMovie(int id, [FromBody] UpdateMovieDto updateMovieDTO) 
         {
             var movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
 
             if (movie == null)
                 return NotFound();
 
-            _mapper.Map(movieDTO, movie);
+            _mapper.Map(updateMovieDTO, movie);
             _context.SaveChanges();
 
             return NoContent();
         }
 
-        [HttpDelete("{id}", Name = "DeleteMovie")]
+        [HttpDelete("{id}")]
         public IActionResult DeleteMovie(int id)
         {
             var movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
