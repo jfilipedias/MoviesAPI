@@ -31,7 +31,7 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetTheaters()
+        public IActionResult GetAllTheaters()
         {
             return Ok(_context.Theaters);
         }
