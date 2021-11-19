@@ -19,7 +19,7 @@ namespace MoviesAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost]
+        [HttpPost(Name = "CreateMovie")]
         public IActionResult CreateMovie([FromBody] CreateMovieDto createMovieDTO)
         {
             var movie = _mapper.Map<Movie>(createMovieDTO);
@@ -30,13 +30,13 @@ namespace MoviesAPI.Controllers
             return CreatedAtAction(nameof(GetMovieById), new { Id = movie.Id }, movie);
         }
 
-        [HttpGet]
+        [HttpGet(Name = "GetAllMovies")]
         public IActionResult GetAllMovies()
         {
             return Ok(_context.Movies);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetMovieById")]
         public IActionResult GetMovieById(int id)
         {
             var movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
@@ -48,7 +48,7 @@ namespace MoviesAPI.Controllers
             return Ok(movieDTO);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}", Name = "UpdateMovie")]
         public IActionResult UpdateMovie(int id, [FromBody] UpdateMovieDto updateMovieDTO) 
         {
             var movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
@@ -62,7 +62,7 @@ namespace MoviesAPI.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}", Name = "DeleteMovie")]
         public IActionResult DeleteMovie(int id)
         {
             var movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);

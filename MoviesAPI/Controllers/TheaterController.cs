@@ -19,7 +19,7 @@ namespace MoviesAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost]
+        [HttpPost(Name = "CreateTheater")]
         public IActionResult CreateTheater([FromBody] CreateTheaterDto createTheaterDto)
         {
             var theater = _mapper.Map<Theater>(createTheaterDto);
@@ -30,13 +30,13 @@ namespace MoviesAPI.Controllers
             return CreatedAtAction(nameof(GetTheaterById), new { Id = theater.Id }, theater);
         }
 
-        [HttpGet]
+        [HttpGet(Name = "GetAllTheaters")]
         public IActionResult GetAllTheaters()
         {
             return Ok(_context.Theaters);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetTheaterById")]
         public IActionResult GetTheaterById(int id)
         {
             var theater = _context.Theaters.FirstOrDefault(theater => theater.Id == id);
@@ -48,7 +48,7 @@ namespace MoviesAPI.Controllers
             return Ok(readTheaterDto);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}", Name = "UpdateTheater")]
         public IActionResult UpdateTheater(int id, [FromBody] UpdateTheaterDto updateTheaterDto)
         {
             var theater = _context.Theaters.FirstOrDefault(theater => theater.Id == id);
@@ -62,7 +62,7 @@ namespace MoviesAPI.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}", Name = "DeleteTheater")]
         public IActionResult DeleteTheater(int id)
         {
             var theater = _context.Theaters.FirstOrDefault(theater => theater.Id == id);

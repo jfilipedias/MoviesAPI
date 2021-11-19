@@ -19,7 +19,7 @@ namespace MoviesAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost]
+        [HttpPost(Name = "CreateAddress")]
         public IActionResult CreateAddress([FromBody] CreateAddressDto createAddressDto)
         {
             var address = _mapper.Map<Address>(createAddressDto);
@@ -30,13 +30,13 @@ namespace MoviesAPI.Controllers
             return CreatedAtAction(nameof(GetAddressById), new { Id = address.Id }, address);
         }
 
-        [HttpGet]
+        [HttpGet(Name = "GetAllAddresses")]
         public IActionResult GetAllAddresses()
         {
             return Ok(_context.Addresses);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetAddressById")]
         public IActionResult GetAddressById(int id)
         {
             var address = _context.Addresses.FirstOrDefault(address => address.Id == id);
@@ -48,7 +48,7 @@ namespace MoviesAPI.Controllers
             return Ok(readAddressDto);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}", Name = "UpdateAddress")]
         public IActionResult UpdateAddress(int id, [FromBody] UpdateAddressDto updateAddressDto)
         {
             var address = _context.Addresses.FirstOrDefault(address => address.Id == id);
@@ -62,7 +62,7 @@ namespace MoviesAPI.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}", Name = "DeleteAddress")]
         public IActionResult DeleteAddress(int id)
         {
             var address = _context.Addresses.FirstOrDefault(address => address.Id == id);
