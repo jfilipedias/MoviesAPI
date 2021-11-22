@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MoviesAPI.Models
 {
+    [Table("Movies")]
     public class Movie
     {
         [Key]

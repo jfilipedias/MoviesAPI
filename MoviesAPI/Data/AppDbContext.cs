@@ -22,6 +22,12 @@ namespace MoviesAPI.Data
                 .HasOne(address => address.Theater)
                 .WithOne(theater => theater.Address)
                 .HasForeignKey<Theater>(theater => theater.AddressId);
+
+            // Relationship 1:n
+            builder.Entity<Theater>()
+                .HasOne(theater => theater.Manager)
+                .WithMany(manager => manager.Theaters)
+                .HasForeignKey(theater => theater.ManagerId);
         }
     }
 }
