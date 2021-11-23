@@ -59,7 +59,7 @@ namespace MoviesAPI.Controllers
 
         [HttpPut("{id}", Name = "UpdateAddress")]
         [SwaggerOperation(Summary = "Updates an address by id", Description = "Updates an address by id")]
-        [SwaggerResponse(200, "The given address has been updated", typeof(ReadAddressDto))]
+        [SwaggerResponse(200, "The given address has been updated")]
         [SwaggerResponse(404, "The given address was not found")]
         public IActionResult UpdateAddress(int id, [FromBody] UpdateAddressDto updateAddressDto)
         {
@@ -75,7 +75,7 @@ namespace MoviesAPI.Controllers
 
         [HttpDelete("{id}", Name = "DeleteAddress")]
         [SwaggerOperation(Summary = "Deletes an address by id", Description = "Deletes an address by id")]
-        [SwaggerResponse(200, "The given address has been deleted", typeof(ReadAddressDto))]
+        [SwaggerResponse(200, "The given address has been deleted")]
         [SwaggerResponse(404, "The given address was not found")]
         public IActionResult DeleteAddress(int id)
         {
