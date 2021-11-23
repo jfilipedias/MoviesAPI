@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Data;
 using MoviesAPI.Data.Dtos;
 using MoviesAPI.Models;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace MoviesAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [SwaggerTag("Create, read, update and delete managers")]
     public class ManagerController : ControllerBase
     {
         private AppDbContext _context;
@@ -20,6 +22,9 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpPost(Name = "CreateManager")]
+        [SwaggerOperation(Summary = "Creates a new manager", Description = "Adds a new manager to the database")]
+        [SwaggerResponse(201, "The manager was created", typeof(Manager))]
+        [SwaggerResponse(400, "The manager data is invalid")]
         public IActionResult CreateManager([FromBody] CreateManagerDto createManagerDto)
         {
             var manager = _mapper.Map<Manager>(createManagerDto);
@@ -30,12 +35,17 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpGet(Name = "GetAllManagers")]
+        [SwaggerOperation(Summary = "Lists all managers", Description = "Return all the managers in the database")]
+        [SwaggerResponse(200, "All existing managers have been listed", typeof(List<Manager>))]
         public IActionResult GetAllManagers()
         {
             return Ok(_context.Movies);
         }
 
         [HttpGet("{id}", Name = "GetManagerById")]
+        [SwaggerOperation(Summary = "Lists a manager by id", Description = "Lists a manager by id")]
+        [SwaggerResponse(200, "The given manager has been listed", typeof(ReadManagerDto))]
+        [SwaggerResponse(404, "The given manager was not found")]
         public IActionResult GetManagerById(int id)
         {
             var manager = _context.Managers.FirstOrDefault(manager => manager.Id == id);
@@ -48,6 +58,9 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpPut("{id}", Name = "UpdateManager")]
+        [SwaggerOperation(Summary = "Updates an manager by id", Description = "Updates an manager by id")]
+        [SwaggerResponse(200, "The given manager has been updated")]
+        [SwaggerResponse(404, "The given manager was not found")]
         public IActionResult UpdateManger(int id, [FromBody] UpdateManagerDto updateManagerDto)
         {
             var manager = _context.Managers.FirstOrDefault(manager => manager.Id == id);
@@ -61,6 +74,9 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpDelete("{id}", Name = "DeleteManager")]
+        [SwaggerOperation(Summary = "Deletes an manager by id", Description = "Deletes an manager by id")]
+        [SwaggerResponse(200, "The given manager has been deleted")]
+        [SwaggerResponse(404, "The given manager was not found")]
         public IActionResult DeleteManager(int id)
         {
             var manager = _context.Managers.FirstOrDefault(manager => manager.Id == id);
