@@ -9,7 +9,8 @@ namespace MoviesAPI.Models
         [Key]
         [Required]
         public int Id { get; set; }
-
+        
+        [Required]
         public string Name { get; set; }
 
         public virtual List<Theater> Theaters { get; set; }
