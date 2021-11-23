@@ -41,11 +41,10 @@ namespace MoviesAPI.Controllers
         {
             var movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
             
-            if (movie == null)
-                return NotFound();
+            if (movie == null) return NotFound();
 
-            var movieDTO = _mapper.Map<ReadMovieDto>(movie);
-            return Ok(movieDTO);
+            var readMovieDTO = _mapper.Map<ReadMovieDto>(movie);
+            return Ok(readMovieDTO);
         }
 
         [HttpPut("{id}", Name = "UpdateMovie")]
@@ -53,8 +52,7 @@ namespace MoviesAPI.Controllers
         {
             var movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
 
-            if (movie == null)
-                return NotFound();
+            if (movie == null) return NotFound();
 
             _mapper.Map(updateMovieDTO, movie);
             _context.SaveChanges();
@@ -67,8 +65,7 @@ namespace MoviesAPI.Controllers
         {
             var movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
 
-            if (movie == null)
-                return NotFound();
+            if (movie == null) return NotFound();
 
             _context.Remove(movie);
             _context.SaveChanges();

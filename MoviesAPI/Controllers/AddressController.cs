@@ -41,8 +41,7 @@ namespace MoviesAPI.Controllers
         {
             var address = _context.Addresses.FirstOrDefault(address => address.Id == id);
 
-            if (address == null)
-                return NotFound();
+            if (address == null) return NotFound();
 
             var readAddressDto = _mapper.Map<ReadAddressDto>(address);
             return Ok(readAddressDto);
@@ -53,8 +52,7 @@ namespace MoviesAPI.Controllers
         {
             var address = _context.Addresses.FirstOrDefault(address => address.Id == id);
 
-            if (address == null)
-                return NotFound();
+            if (address == null) return NotFound();
 
             _mapper.Map(updateAddressDto, address);
             _context.SaveChanges();
@@ -67,8 +65,7 @@ namespace MoviesAPI.Controllers
         {
             var address = _context.Addresses.FirstOrDefault(address => address.Id == id);
 
-            if (address == null)
-                return NotFound();
+            if (address == null) return NotFound();
 
             _context.Remove(address);
             _context.SaveChanges();

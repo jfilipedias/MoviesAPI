@@ -41,8 +41,7 @@ namespace MoviesAPI.Controllers
         {
             var theater = _context.Theaters.FirstOrDefault(theater => theater.Id == id);
 
-            if (theater == null)
-                return NotFound();
+            if (theater == null) return NotFound();
 
             var readTheaterDto = _mapper.Map<ReadTheaterDto>(theater);
             return Ok(readTheaterDto);
@@ -53,8 +52,7 @@ namespace MoviesAPI.Controllers
         {
             var theater = _context.Theaters.FirstOrDefault(theater => theater.Id == id);
 
-            if (theater == null)
-                return NotFound();
+            if (theater == null) return NotFound();
 
             _mapper.Map(updateTheaterDto, theater);
             _context.SaveChanges();
@@ -67,8 +65,7 @@ namespace MoviesAPI.Controllers
         {
             var theater = _context.Theaters.FirstOrDefault(theater => theater.Id == id);
 
-            if (theater == null)
-                return NotFound();
+            if (theater == null) return NotFound();
 
             _context.Remove(theater);
             _context.SaveChanges();
