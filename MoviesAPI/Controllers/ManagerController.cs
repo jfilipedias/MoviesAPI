@@ -58,7 +58,7 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpPut("{id}", Name = "UpdateManager")]
-        [SwaggerOperation(Summary = "Updates an manager by id", Description = "Updates an manager by id")]
+        [SwaggerOperation(Summary = "Updates a manager by id", Description = "Updates a manager by id")]
         [SwaggerResponse(200, "The given manager has been updated")]
         [SwaggerResponse(404, "The given manager was not found")]
         public IActionResult UpdateManger(int id, [FromBody] UpdateManagerDto updateManagerDto)
@@ -74,7 +74,7 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpDelete("{id}", Name = "DeleteManager")]
-        [SwaggerOperation(Summary = "Deletes an manager by id", Description = "Deletes an manager by id")]
+        [SwaggerOperation(Summary = "Deletes a manager by id", Description = "Deletes a manager by id")]
         [SwaggerResponse(200, "The given manager has been deleted")]
         [SwaggerResponse(404, "The given manager was not found")]
         public IActionResult DeleteManager(int id)
