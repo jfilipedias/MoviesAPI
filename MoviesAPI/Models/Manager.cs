@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace MoviesAPI.Models
 {
@@ -13,6 +14,7 @@ namespace MoviesAPI.Models
         [Required]
         public string Name { get; set; }
 
+        [JsonIgnore]
         public virtual List<Theater> Theaters { get; set; }
     }
 }
