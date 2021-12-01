@@ -15,10 +15,10 @@ namespace MoviesAPI.Controllers
         private AppDbContext _context;
         private IMapper _mapper;
         
-        public ManagerController(AppDbContext context, IMapper _mapper)
+        public ManagerController(AppDbContext context, IMapper mapper)
         {
             _context = context;
-            _mapper = _mapper;
+            _mapper = mapper;
         }
 
         [HttpPost(Name = "CreateManager")]
