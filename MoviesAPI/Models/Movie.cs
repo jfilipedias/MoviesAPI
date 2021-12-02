@@ -23,5 +23,7 @@ namespace MoviesAPI.Models
         public int Duration {  get; set; }
     
         public int AgeRating { get; set; }
+
+        public virtual List<Session> Sessions { get; set; }
     }
 }

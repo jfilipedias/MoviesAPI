@@ -9,6 +9,7 @@ namespace MoviesAPI.Data
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Theater> Theaters { get; set; }
+        public DbSet<Session> Sessions { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -27,6 +28,17 @@ namespace MoviesAPI.Data
                 .HasOne(theater => theater.Manager)
                 .WithMany(manager => manager.Theaters)
                 .HasForeignKey(theater => theater.ManagerId);
+
+            // Relationship n:n
+            builder.Entity<Session>()
+                .HasOne(session => session.Movie)
+                .WithMany(movie => movie.Sessions)
+                .HasForeignKey(session => session.MovieId);
+
+            builder.Entity<Session>()
+                .HasOne(session => session.Theater)
+                .WithMany(theater => theater.Sessions)
+                .HasForeignKey(session => session.TheaterId);
         }
     }
 }
