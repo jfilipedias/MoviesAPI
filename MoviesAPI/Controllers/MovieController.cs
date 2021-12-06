@@ -35,12 +35,23 @@ namespace MoviesAPI.Controllers
             return CreatedAtAction(nameof(GetMovieById), new { Id = movie.Id }, movie);
         }
 
-        [HttpGet(Name = "GetAllMovies")]
-        [SwaggerOperation(Summary = "Lists all movies", Description = "Return all the movies in the database")]
-        [SwaggerResponse(200, "All existing movies have been listed", typeof(List<Address>))]
-        public IActionResult GetAllMovies()
+        [HttpGet(Name = "GetMovies")]
+        [SwaggerOperation(Summary = "Lists movies", Description = "Return the movies in the database. The movies can be filtered by age rating")]
+        [SwaggerResponse(200, "All existing movies have been listed", typeof(List<Movie>))]
+        [SwaggerResponse(404, "Was not found a movie with the given filter")]
+        public IActionResult GetMovies([FromQuery] int? AgeRating = null)
         {
-            return Ok(_context.Movies);
+            List<Movie> movies;
+
+            if (AgeRating == null)
+                movies = _context.Movies.ToList();
+            else
+                movies = _context.Movies.Where(movie => movie.AgeRating <= AgeRating).ToList();
+
+            if (movies == null) return NotFound();
+
+            var readMovieDtos = _mapper.Map<List<ReadMovieDto>>(movies);
+            return Ok(readMovieDtos);
         }
 
         [HttpGet("{id}", Name = "GetMovieById")]
