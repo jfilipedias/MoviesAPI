@@ -45,7 +45,7 @@ namespace MoviesAPI.Controllers
 
         [HttpGet("{id}", Name = "GetMovieById")]
         [SwaggerOperation(Summary = "Lists a movie by id", Description = "Lists a movie by id")]
-        [SwaggerResponse(200, "The given movie has been listed", typeof(ReadAddressDto))]
+        [SwaggerResponse(200, "The given movie has been listed", typeof(ReadMovieDto))]
         [SwaggerResponse(404, "The given movie was not found")]
         public IActionResult GetMovieById(int id)
         {
