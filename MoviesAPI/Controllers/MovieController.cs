@@ -59,7 +59,7 @@ namespace MoviesAPI.Controllers
 
         [HttpPut("{id}", Name = "UpdateMovie")]
         [SwaggerOperation(Summary = "Updates a movie by id", Description = "Updates a movie by id")]
-        [SwaggerResponse(200, "The given movie has been updated")]
+        [SwaggerResponse(204, "The given movie has been updated")]
         [SwaggerResponse(404, "The given movie was not found")]
         public IActionResult UpdateMovie(int id, [FromBody] UpdateMovieDto updateMovieDTO) 
         {
@@ -75,7 +75,7 @@ namespace MoviesAPI.Controllers
 
         [HttpDelete("{id}", Name = "DeleteMovie")]
         [SwaggerOperation(Summary = "Deletes a movie by id", Description = "Deletes a movie by id")]
-        [SwaggerResponse(200, "The given movie has been deleted")]
+        [SwaggerResponse(204, "The given movie has been deleted")]
         [SwaggerResponse(404, "The given movie was not found")]
         public IActionResult DeleteMovie(int id)
         {
