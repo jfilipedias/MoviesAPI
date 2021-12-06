@@ -12,8 +12,8 @@ namespace MoviesAPI.Controllers
     [SwaggerTag("Create, read, update and delete sessions")]
     public class SessionController : ControllerBase
     {
-        public AppDbContext _context;
-        public IMapper _mapper;
+        private AppDbContext _context;
+        private IMapper _mapper;
 
         public SessionController(AppDbContext context, IMapper mapper)
         {
@@ -28,12 +28,11 @@ namespace MoviesAPI.Controllers
         public IActionResult CreateSession([FromBody] CreateSessionDto createSessionDto)
         {
             var session = _mapper.Map<Session>(createSessionDto);
-            
+
             _context.Sessions.Add(session);
             _context.SaveChanges();
 
-            return CreatedAtAction(nameof(GetSessionById), new { Id = session.Id}, session);
-
+            return CreatedAtAction(nameof(GetSessionById), new { Id = session.Id }, session);
         }
 
         [HttpGet(Name = "GetAllSessions")]
