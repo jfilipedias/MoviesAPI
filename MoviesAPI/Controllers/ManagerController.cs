@@ -39,7 +39,7 @@ namespace MoviesAPI.Controllers
         [SwaggerResponse(200, "All existing managers have been listed", typeof(List<Manager>))]
         public IActionResult GetAllManagers()
         {
-            return Ok(_context.Movies);
+            return Ok(_context.Managers);
         }
 
         [HttpGet("{id}", Name = "GetManagerById")]
