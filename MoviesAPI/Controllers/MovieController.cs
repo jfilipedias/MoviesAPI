@@ -23,7 +23,7 @@ namespace MoviesAPI.Controllers
 
         [HttpPost(Name = "CreateMovie")]
         [SwaggerOperation(Summary = "Creates a new movie", Description = "Adds a new movie to the database")]
-        [SwaggerResponse(201, "The movie was created", typeof(Address))]
+        [SwaggerResponse(201, "The movie was created", typeof(Movie))]
         [SwaggerResponse(400, "The movie data is invalid")]
         public IActionResult CreateMovie([FromBody] CreateMovieDto createMovieDTO)
         {
