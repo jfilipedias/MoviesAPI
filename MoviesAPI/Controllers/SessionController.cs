@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Data;
+using MoviesAPI.Data.Dtos;
 using MoviesAPI.Models;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -53,7 +54,7 @@ namespace MoviesAPI.Controllers
 
             if (session == null) return NotFound();
 
-            var readTheaterDto = _mapper.Map<ReadSessionDtop>(session);
+            var readTheaterDto = _mapper.Map<ReadSessionDto>(session);
             return Ok(readTheaterDto);
         }
 
