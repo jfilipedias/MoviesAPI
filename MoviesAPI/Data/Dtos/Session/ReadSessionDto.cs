@@ -9,5 +9,9 @@ namespace MoviesAPI.Data.Dtos
         public Movie Movie { get; set; }
 
         public Theater Theater { get; set; }
+
+        public DateTime ClosingTime { get; set; }
+
+        public DateTime OpeningTime { get; set; }
     }
 }
