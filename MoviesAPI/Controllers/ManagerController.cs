@@ -28,10 +28,11 @@ namespace MoviesAPI.Controllers
         public IActionResult CreateManager([FromBody] CreateManagerDto createManagerDto)
         {
             var manager = _mapper.Map<Manager>(createManagerDto);
+
             _context.Managers.Add(manager);
             _context.SaveChanges();
 
-            return Ok(manager);
+            return CreatedAtAction(nameof(GetManagerById), new { Id = manager.Id }, manager);
         }
 
         [HttpGet(Name = "GetAllManagers")]

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace MoviesAPI.Models
 {
@@ -24,6 +25,7 @@ namespace MoviesAPI.Models
     
         public int AgeRating { get; set; }
 
+        [JsonIgnore]
         public virtual List<Session> Sessions { get; set; }
     }
 }

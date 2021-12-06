@@ -14,6 +14,7 @@ namespace MoviesAPI.Models
         [Required(ErrorMessage = "The name field are required")]
         public string Name { get; set; }
 
+        [JsonIgnore]
         public virtual Address Address { get; set; }
 
         public int AddressId { get; set; }
@@ -23,6 +24,7 @@ namespace MoviesAPI.Models
 
         public int ManagerId { get; set; }
 
+        [JsonIgnore]
         public virtual List<Session> Sessions { get; set; }
     }
 }
