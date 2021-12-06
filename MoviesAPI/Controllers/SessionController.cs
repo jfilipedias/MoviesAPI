@@ -56,5 +56,37 @@ namespace MoviesAPI.Controllers
             var readTheaterDto = _mapper.Map<ReadSessionDtop>(session);
             return Ok(readTheaterDto);
         }
+
+        [HttpPut("{id}", Name = "UpdateSession")]
+        [SwaggerOperation(Summary = "Updates a session by id", Description = "Updates a session by id")]
+        [SwaggerResponse(204, "The given session has been updated")]
+        [SwaggerResponse(404, "The given session was not found")]
+        public IActionResult UpdateSession(int id, [FromBody] UpdateSessionDto updateSessionDto)
+        {
+            var session = _context.Sessions.FirstOrDefault(session => session.Id == id);
+
+            if (session == null) return NotFound();
+
+            _mapper.Map(updateSessionDto, session);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}", Name = "DeleteSessions")]
+        [SwaggerOperation(Summary = "Deletes a session by id", Description = "Deletes a session by id")]
+        [SwaggerResponse(204, "The given session has been deleted")]
+        [SwaggerResponse(404, "The given session was not found")]
+        public IActionResult DeleteSession(int id)
+        {
+            var session = _context.Sessions.FirstOrDefault(session => session.Id == id);
+
+            if (session == null) return NotFound();
+
+            _context.Remove(session);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
