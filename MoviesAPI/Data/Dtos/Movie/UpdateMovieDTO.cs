@@ -15,5 +15,7 @@ namespace MoviesAPI.Data.Dtos
 
         [Range(1, 600, ErrorMessage = "The Duration field must be at least 1 minute and at most 600 minutes")]
         public int Duration { get; set; }
+
+        public int AgeRating { get; set; }
     }
 }
