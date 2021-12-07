@@ -56,9 +56,9 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpPut("{id}", Name = "UpdateTheater")]
-        [SwaggerOperation(Summary = "Updates a theater by id", Description = "Updates a theater by id")]
-        [SwaggerResponse(204, "The given theater has been updated")]
-        [SwaggerResponse(404, "The given theater was not found")]
+        [SwaggerOperation(Summary = "Updates a theater by id.", Description = "Updates a theater by id.")]
+        [SwaggerResponse(204, "The given theater has been updated.")]
+        [SwaggerResponse(404, "The given theater was not found.")]
         public IActionResult UpdateTheater(int id, [FromBody] UpdateTheaterDto updateTheaterDto)
         {
             var readTheaterDto = _theaterService.UpdateTheater(id, updateTheaterDto);

@@ -56,9 +56,9 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpPut("{id}", Name = "UpdateMovie")]
-        [SwaggerOperation(Summary = "Updates a movie by id", Description = "Updates a movie by id")]
-        [SwaggerResponse(204, "The given movie has been updated")]
-        [SwaggerResponse(404, "The given movie was not found")]
+        [SwaggerOperation(Summary = "Updates a movie by id.", Description = "Updates a movie by id.")]
+        [SwaggerResponse(204, "The given movie has been updated.")]
+        [SwaggerResponse(404, "The given movie was not found.")]
         public IActionResult UpdateMovie(int id, [FromBody] UpdateMovieDto updateMovieDTO) 
         {
             var readMovieDto = _movieService.UpdateMovie(id, updateMovieDTO);
@@ -69,9 +69,9 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpDelete("{id}", Name = "DeleteMovie")]
-        [SwaggerOperation(Summary = "Deletes a movie by id", Description = "Deletes a movie by id")]
-        [SwaggerResponse(204, "The given movie has been deleted")]
-        [SwaggerResponse(404, "The given movie was not found")]
+        [SwaggerOperation(Summary = "Deletes a movie by id.", Description = "Deletes a movie by id.")]
+        [SwaggerResponse(204, "The given movie has been deleted.")]
+        [SwaggerResponse(404, "The given movie was not found.")]
         public IActionResult DeleteMovie(int id)
         {
             var readMovieDto = _movieService.DeleteMovie(id);
