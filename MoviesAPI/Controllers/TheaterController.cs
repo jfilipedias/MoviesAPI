@@ -23,7 +23,7 @@ namespace MoviesAPI.Controllers
 
         [HttpPost(Name = "CreateTheater")]
         [SwaggerOperation(Summary = "Creates a new theater", Description = "Adds a new theater to the database")]
-        [SwaggerResponse(201, "The theater was created", typeof(Manager))]
+        [SwaggerResponse(201, "The theater was created", typeof(Theater))]
         [SwaggerResponse(400, "The theater data is invalid")]
         public IActionResult CreateTheater([FromBody] CreateTheaterDto createTheaterDto)
         {
@@ -45,7 +45,7 @@ namespace MoviesAPI.Controllers
 
         [HttpGet("{id}", Name = "GetTheaterById")]
         [SwaggerOperation(Summary = "Lists a theater by id", Description = "Lists a theater by id")]
-        [SwaggerResponse(200, "The given theater has been listed", typeof(ReadManagerDto))]
+        [SwaggerResponse(200, "The given theater has been listed", typeof(ReadTheaterDto))]
         [SwaggerResponse(404, "The given theater was not found")]
         public IActionResult GetTheaterById(int id)
         {
