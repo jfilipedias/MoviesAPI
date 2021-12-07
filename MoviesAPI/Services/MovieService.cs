@@ -65,7 +65,7 @@ namespace MoviesAPI.Services
         /// Updates a movie by id.
         /// </summary>
         /// <param name="id">The movie id.</param>
-        /// <param name="updateMovieDTO">Movies infos to be updated.</param>
+        /// <param name="updateMovieDTO">Movies info to update.</param>
         /// <returns>ReadMovieDto from the updated movie.</returns>
         public ReadMovieDto? UpdateMovie(int id, UpdateMovieDto updateMovieDTO)
         {
