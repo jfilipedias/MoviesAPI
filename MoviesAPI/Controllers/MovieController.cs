@@ -36,19 +36,17 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpGet(Name = "GetMovies")]
-        [SwaggerOperation(Summary = "Lists movies", Description = "Return the movies in the database. The movies can be filtered by age rating")]
-        [SwaggerResponse(200, "All existing movies have been listed", typeof(List<Movie>))]
-        [SwaggerResponse(404, "Was not found a movie with the given filter")]
+        [SwaggerOperation(Summary = "Lists movies", Description = "Return all the movies in the database with the given params")]
+        [SwaggerResponse(200, "All existing movies with the given params have been listed", typeof(List<Movie>))]
+        [SwaggerResponse(404, "Was not found a movie with the given params")]
         public IActionResult GetMovies([FromQuery] int? AgeRating = null)
         {
-            List<Movie> movies;
-
-            if (AgeRating == null)
-                movies = _context.Movies.ToList();
-            else
-                movies = _context.Movies.Where(movie => movie.AgeRating <= AgeRating).ToList();
+            var movies = _context.Movies.ToList();
 
             if (movies == null) return NotFound();
+            
+            if (AgeRating != null)
+                movies = movies.Where(movie => movie.AgeRating <= AgeRating).ToList();
 
             var readMovieDtos = _mapper.Map<List<ReadMovieDto>>(movies);
             return Ok(readMovieDtos);
