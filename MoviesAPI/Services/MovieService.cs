@@ -21,7 +21,7 @@ namespace MoviesAPI.Services
         /// </summary>
         /// <param name="createMovieDTO">Movie to be created.</param>
         /// <returns>ReadMovieDto from the created movie.</returns>
-        public ReadMovieDto? CreateMovie(CreateMovieDto createMovieDTO)
+        public ReadMovieDto CreateMovie(CreateMovieDto createMovieDTO)
         {
             var movie = _mapper.Map<Movie>(createMovieDTO);
             _context.Movies.Add(movie);

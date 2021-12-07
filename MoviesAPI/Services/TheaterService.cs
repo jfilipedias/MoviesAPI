@@ -21,7 +21,7 @@ namespace MoviesAPI.Services
         /// </summary>
         /// <param name="createTheaterDto">Theater to be created.</param>
         /// <returns>ReadTheaterDto from the created theater.</returns>
-        public ReadTheaterDto? CreateTheater(CreateTheaterDto createTheaterDto)
+        public ReadTheaterDto CreateTheater(CreateTheaterDto createTheaterDto)
         {
             var theater = _mapper.Map<Theater>(createTheaterDto);
             _context.Theaters.Add(theater);
