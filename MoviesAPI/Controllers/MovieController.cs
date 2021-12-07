@@ -61,9 +61,9 @@ namespace MoviesAPI.Controllers
         [SwaggerResponse(404, "The given movie was not found.")]
         public IActionResult UpdateMovie(int id, [FromBody] UpdateMovieDto updateMovieDTO) 
         {
-            var readMovieDto = _movieService.UpdateMovie(id, updateMovieDTO);
+            var result = _movieService.UpdateMovie(id, updateMovieDTO);
 
-            if (readMovieDto == null) return NotFound();
+            if (result.IsFailed) return NotFound();
 
             return NoContent();
         }
@@ -74,9 +74,9 @@ namespace MoviesAPI.Controllers
         [SwaggerResponse(404, "The given movie was not found.")]
         public IActionResult DeleteMovie(int id)
         {
-            var readMovieDto = _movieService.DeleteMovie(id);
+            var result = _movieService.DeleteMovie(id);
 
-            if (readMovieDto == null) return NotFound();
+            if (result.IsFailed) return NotFound();
 
             return NoContent();
         }

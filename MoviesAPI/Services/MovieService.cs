@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentResults;
 using MoviesAPI.Data;
 using MoviesAPI.Data.Dtos;
 using MoviesAPI.Models;
@@ -66,37 +67,34 @@ namespace MoviesAPI.Services
         /// </summary>
         /// <param name="id">The movie id.</param>
         /// <param name="updateMovieDTO">Movies info to update.</param>
-        /// <returns>ReadMovieDto from the updated movie.</returns>
-        public ReadMovieDto? UpdateMovie(int id, UpdateMovieDto updateMovieDTO)
+        /// <returns>Operation result.</returns>
+        public Result UpdateMovie(int id, UpdateMovieDto updateMovieDTO)
         {
             var movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
 
-            if (movie == null) return null;
+            if (movie == null) return Result.Fail("Movie not found.");
 
             _mapper.Map(updateMovieDTO, movie);
             _context.SaveChanges();
 
-            var readMovieDto = _mapper.Map<ReadMovieDto>(updateMovieDTO);
-            readMovieDto.Id = id;
-
-            return readMovieDto;
+            return  Result.Ok();
         }
 
         /// <summary>
         /// Deletes a movie by id.
         /// </summary>
         /// <param name="id">The movie id.</param>
-        /// <returns>ReadMovieDto from the deleted movie.</returns>
-        public ReadMovieDto? DeleteMovie(int id)
+        /// <returns>Operation result.</returns>
+        public Result DeleteMovie(int id)
         {
             var movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
 
-            if (movie == null) return null;
+            if (movie == null) return Result.Fail("Movie not found.");
 
             _context.Remove(movie);
             _context.SaveChanges();
 
-            return _mapper.Map<ReadMovieDto>(movie);
+            return Result.Ok();
         }
     }
 }

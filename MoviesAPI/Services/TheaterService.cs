@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentResults;
 using MoviesAPI.Data;
 using MoviesAPI.Data.Dtos;
 using MoviesAPI.Models;
@@ -73,37 +74,34 @@ namespace MoviesAPI.Services
         /// </summary>
         /// <param name="id">The theater id.</param>
         /// <param name="updateTheaterDto">Theater info to update.</param>
-        /// <returns>ReadTheaterDto from the updated theater.</returns>
-        public ReadTheaterDto? UpdateTheater(int id, UpdateTheaterDto updateTheaterDto)
+        /// <returns>Operation result.</returns>
+        public Result UpdateTheater(int id, UpdateTheaterDto updateTheaterDto)
         {
             var theater = _context.Theaters.FirstOrDefault(theater => theater.Id == id);
 
-            if (theater == null) return null;
+            if (theater == null) return Result.Fail("Theater not found.");
 
             _mapper.Map(updateTheaterDto, theater);
             _context.SaveChanges();
-            
-            var readTheaterDto = _mapper.Map<ReadTheaterDto>(updateTheaterDto);
-            readTheaterDto.Id = id;
 
-            return readTheaterDto;
+            return Result.Ok();
         }
 
         /// <summary>
         /// Deletes a theater by id.
         /// </summary>
         /// <param name="id">The movie id.</param>
-        /// <returns>ReadTheaterDto from the deleted theater.</returns>
-        public ReadTheaterDto? DeleteTheater(int id)
+        /// <returns>Operation result.</returns>
+        public Result DeleteTheater(int id)
         {
             var theater = _context.Theaters.FirstOrDefault(theater => theater.Id == id);
 
-            if (theater == null) return null;
+            if (theater == null) return Result.Fail("Theater not found.");
 
             _context.Remove(theater);
             _context.SaveChanges();
 
-            return _mapper.Map<ReadTheaterDto>(theater);
+            return Result.Ok();
         }
     }
 }

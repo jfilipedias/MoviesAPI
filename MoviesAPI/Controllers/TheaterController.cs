@@ -61,9 +61,9 @@ namespace MoviesAPI.Controllers
         [SwaggerResponse(404, "The given theater was not found.")]
         public IActionResult UpdateTheater(int id, [FromBody] UpdateTheaterDto updateTheaterDto)
         {
-            var readTheaterDto = _theaterService.UpdateTheater(id, updateTheaterDto);
+            var result = _theaterService.UpdateTheater(id, updateTheaterDto);
             
-            if (readTheaterDto == null) return NotFound();
+            if (result.IsFailed) return NotFound();
 
             return NoContent();
         }
@@ -74,9 +74,9 @@ namespace MoviesAPI.Controllers
         [SwaggerResponse(404, "The theater was not found.")]
         public IActionResult DeleteTheater(int id)
         {
-            var readTheaterDto = _theaterService.DeleteTheater(id);
+            var result = _theaterService.DeleteTheater(id);
 
-            if (readTheaterDto == null) return NotFound();
+            if (result.IsFailed) return NotFound();
 
             return NoContent();
         }
