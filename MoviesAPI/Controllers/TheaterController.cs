@@ -1,8 +1,7 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using MoviesAPI.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Data.Dtos;
 using MoviesAPI.Models;
+using MoviesAPI.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace MoviesAPI.Controllers
@@ -12,63 +11,47 @@ namespace MoviesAPI.Controllers
     [SwaggerTag("Create, read, update and delete managers")]
     public class TheaterController : ControllerBase
     {
-        private AppDbContext _context;
-        private IMapper _mapper;
+        private TheaterService _theaterService;
 
-        public TheaterController(AppDbContext context, IMapper mapper)
+        public TheaterController(TheaterService theaterService)
         {
-            _context = context;
-            _mapper = mapper;
+            _theaterService = theaterService;
         }
 
         [HttpPost(Name = "CreateTheater")]
-        [SwaggerOperation(Summary = "Creates a new theater", Description = "Adds a new theater to the database")]
-        [SwaggerResponse(201, "The theater was created", typeof(Theater))]
-        [SwaggerResponse(400, "The theater data is invalid")]
+        [SwaggerOperation(Summary = "Creates a new theater.", Description = "Creates a new theater.")]
+        [SwaggerResponse(201, "The theater was created.", typeof(Theater))]
+        [SwaggerResponse(400, "The theater data is invalid.")]
         public IActionResult CreateTheater([FromBody] CreateTheaterDto createTheaterDto)
         {
-            var theater = _mapper.Map<Theater>(createTheaterDto);
+            var readTheaterDto = _theaterService.CreateTheater(createTheaterDto);
 
-            _context.Theaters.Add(theater);
-            _context.SaveChanges();
-
-            return CreatedAtAction(nameof(GetTheaterById), new { Id = theater.Id }, theater);
+            return CreatedAtAction(nameof(GetTheaterById), new { Id = readTheaterDto.Id }, readTheaterDto);
         }
 
         [HttpGet(Name = "GetTheaters")]
-        [SwaggerOperation(Summary = "Lists theaters", Description = "Return all the theaters in the database with the given params")]
-        [SwaggerResponse(200, "All existing theaters with the given params have been listed", typeof(List<ReadTheaterDto>))]
-        [SwaggerResponse(404, "Was not found a movie with the given params")]
-        public IActionResult GetTheaters([FromQuery] string MovieName)
+        [SwaggerOperation(Summary = "Gets a theaters list.", Description = "Gets a theaters list filtered by the given parameters.")]
+        [SwaggerResponse(200, "The filtered theaters have been listed.", typeof(List<ReadTheaterDto>))]
+        [SwaggerResponse(404, "Was not found a theater with the given parameters.")]
+        public IActionResult GetTheaters([FromQuery] string movieName)
         {
-            var theaters = _context.Theaters.ToList();
+            var readTheaterDtos = _theaterService.GetTheaters(movieName);
+            
+            if (readTheaterDtos == null) return NotFound();
 
-            if (theaters == null) return NotFound();
-
-            if (!String.IsNullOrEmpty(MovieName))
-            {
-                var query = from theater in theaters
-                            where theater.Sessions.Any(session =>
-                            session.Movie.Title == MovieName)
-                            select theater;
-
-                theaters = query.ToList();
-            }
-            var readTheaterDtos = _mapper.Map<List<ReadTheaterDto>>(theaters);
             return Ok(readTheaterDtos);
         }
 
         [HttpGet("{id}", Name = "GetTheaterById")]
-        [SwaggerOperation(Summary = "Lists a theater by id", Description = "Lists a theater by id")]
-        [SwaggerResponse(200, "The given theater has been listed", typeof(ReadTheaterDto))]
-        [SwaggerResponse(404, "The given theater was not found")]
+        [SwaggerOperation(Summary = "Gets a theater by id.", Description = "Gets a theater by id.")]
+        [SwaggerResponse(200, "The theater has been listed.", typeof(ReadTheaterDto))]
+        [SwaggerResponse(404, "The theater was not found.")]
         public IActionResult GetTheaterById(int id)
         {
-            var theater = _context.Theaters.FirstOrDefault(theater => theater.Id == id);
+            var readTheaterDto = _theaterService.GetTheaterById(id);
 
-            if (theater == null) return NotFound();
+            if (readTheaterDto == null) return NotFound();
 
-            var readTheaterDto = _mapper.Map<ReadTheaterDto>(theater);
             return Ok(readTheaterDto);
         }
 
@@ -78,28 +61,22 @@ namespace MoviesAPI.Controllers
         [SwaggerResponse(404, "The given theater was not found")]
         public IActionResult UpdateTheater(int id, [FromBody] UpdateTheaterDto updateTheaterDto)
         {
-            var theater = _context.Theaters.FirstOrDefault(theater => theater.Id == id);
-
-            if (theater == null) return NotFound();
-
-            _mapper.Map(updateTheaterDto, theater);
-            _context.SaveChanges();
+            var readTheaterDto = _theaterService.UpdateTheater(id, updateTheaterDto);
+            
+            if (readTheaterDto == null) return NotFound();
 
             return NoContent();
         }
 
         [HttpDelete("{id}", Name = "DeleteTheater")]
-        [SwaggerOperation(Summary = "Deletes a theater by id", Description = "Deletes a theater by id")]
-        [SwaggerResponse(204, "The given theater has been deleted")]
-        [SwaggerResponse(404, "The given theater was not found")]
+        [SwaggerOperation(Summary = "Deletes a theater by id.", Description = "Deletes a theater by id.")]
+        [SwaggerResponse(204, "The theater has been deleted.")]
+        [SwaggerResponse(404, "The theater was not found.")]
         public IActionResult DeleteTheater(int id)
         {
-            var theater = _context.Theaters.FirstOrDefault(theater => theater.Id == id);
+            var readTheaterDto = _theaterService.DeleteTheater(id);
 
-            if (theater == null) return NotFound();
-
-            _context.Remove(theater);
-            _context.SaveChanges();
+            if (readTheaterDto == null) return NotFound();
 
             return NoContent();
         }

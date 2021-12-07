@@ -25,6 +25,7 @@ namespace MoviesAPI.Controllers
         public IActionResult CreateMovie([FromBody] CreateMovieDto createMovieDTO)
         {
             var readMovieDto = _movieService.CreateMovie(createMovieDTO);
+
             return CreatedAtAction(nameof(GetMovieById), new { Id = readMovieDto.Id }, readMovieDto);
         }
 
