@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Data.Dtos;
-using MoviesAPI.Models;
 using MoviesAPI.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -20,7 +19,7 @@ namespace MoviesAPI.Controllers
 
         [HttpPost(Name = "CreateTheater")]
         [SwaggerOperation(Summary = "Creates a new theater.", Description = "Creates a new theater.")]
-        [SwaggerResponse(201, "The theater was created.", typeof(Theater))]
+        [SwaggerResponse(201, "The theater was created.", typeof(ReadTheaterDto))]
         [SwaggerResponse(400, "The theater data is invalid.")]
         public IActionResult CreateTheater([FromBody] CreateTheaterDto createTheaterDto)
         {
