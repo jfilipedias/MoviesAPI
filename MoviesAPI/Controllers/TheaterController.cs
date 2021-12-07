@@ -35,12 +35,27 @@ namespace MoviesAPI.Controllers
             return CreatedAtAction(nameof(GetTheaterById), new { Id = theater.Id }, theater);
         }
 
-        [HttpGet(Name = "GetAllTheaters")]
-        [SwaggerOperation(Summary = "Lists all theaters", Description = "Return all the theaters in the database")]
-        [SwaggerResponse(200, "All existing theaters have been listed", typeof(List<Manager>))]
-        public IActionResult GetAllTheaters()
+        [HttpGet(Name = "GetTheaters")]
+        [SwaggerOperation(Summary = "Lists theaters", Description = "Return all the theaters in the database with the given params")]
+        [SwaggerResponse(200, "All existing theaters with the given params have been listed", typeof(List<ReadTheaterDto>))]
+        [SwaggerResponse(404, "Was not found a movie with the given params")]
+        public IActionResult GetTheaters([FromQuery] string MovieName)
         {
-            return Ok(_context.Theaters);
+            var theaters = _context.Theaters.ToList();
+
+            if (theaters == null) return NotFound();
+
+            if (!String.IsNullOrEmpty(MovieName))
+            {
+                var query = from theater in theaters
+                            where theater.Sessions.Any(session =>
+                            session.Movie.Title == MovieName)
+                            select theater;
+
+                theaters = query.ToList();
+            }
+            var readTheaterDtos = _mapper.Map<List<ReadTheaterDto>>(theaters);
+            return Ok(readTheaterDtos);
         }
 
         [HttpGet("{id}", Name = "GetTheaterById")]
