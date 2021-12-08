@@ -9,6 +9,7 @@ var connectionString = builder.Configuration.GetConnectionString("default");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseNpgsql(connectionString, options => options.EnableRetryOnFailure()));
 
 // Add services to the container.
+builder.Services.AddScoped<AddressService, AddressService>();
 builder.Services.AddScoped<MovieService, MovieService>();
 builder.Services.AddScoped<TheaterService, TheaterService>();
 builder.Services.AddControllers();
