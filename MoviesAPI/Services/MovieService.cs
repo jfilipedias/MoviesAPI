@@ -17,11 +17,6 @@ namespace MoviesAPI.Services
             _mapper = mapper;
         }
 
-        /// <summary>
-        /// Creates a new movie in the database.
-        /// </summary>
-        /// <param name="createMovieDTO">Movie to be created.</param>
-        /// <returns>ReadMovieDto from the created movie.</returns>
         public ReadMovieDto CreateMovie(CreateMovieDto createMovieDTO)
         {
             var movie = _mapper.Map<Movie>(createMovieDTO);
@@ -31,11 +26,6 @@ namespace MoviesAPI.Services
             return _mapper.Map<ReadMovieDto>(movie);
         }
 
-        /// <summary>
-        /// Gets a list of movies filtered by the given parameters.
-        /// </summary>
-        /// <param name="ageRating">Age rating to be filtered.</param>
-        /// <returns>ReadMovieDto list from the filtered movies.</returns>
         public List<ReadMovieDto>? GetMovies(int? ageRating)
         {
             var movies = _context.Movies.ToList();
@@ -48,11 +38,6 @@ namespace MoviesAPI.Services
             return _mapper.Map<List<ReadMovieDto>>(movies);
         }
 
-        /// <summary>
-        /// Gets a movie by id.
-        /// </summary>
-        /// <param name="id">The movie id.</param>
-        /// <returns>ReadMovieDto from the movie.</returns>
         public ReadMovieDto? GetMovieById(int id)
         {
             var movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
@@ -62,12 +47,6 @@ namespace MoviesAPI.Services
             return _mapper.Map<ReadMovieDto>(movie);
         }
 
-        /// <summary>
-        /// Updates a movie by id.
-        /// </summary>
-        /// <param name="id">The movie id.</param>
-        /// <param name="updateMovieDTO">Movies info to update.</param>
-        /// <returns>Operation result.</returns>
         public Result UpdateMovie(int id, UpdateMovieDto updateMovieDTO)
         {
             var movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
@@ -80,11 +59,6 @@ namespace MoviesAPI.Services
             return  Result.Ok();
         }
 
-        /// <summary>
-        /// Deletes a movie by id.
-        /// </summary>
-        /// <param name="id">The movie id.</param>
-        /// <returns>Operation result.</returns>
         public Result DeleteMovie(int id)
         {
             var movie = _context.Movies.FirstOrDefault(movie => movie.Id == id);
