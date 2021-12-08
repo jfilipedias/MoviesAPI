@@ -12,6 +12,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingPro
 builder.Services.AddScoped<AddressService, AddressService>();
 builder.Services.AddScoped<ManagerService, ManagerService>();
 builder.Services.AddScoped<MovieService, MovieService>();
+builder.Services.AddScoped<SessionService, SessionService>();
 builder.Services.AddScoped<TheaterService, TheaterService>();
 builder.Services.AddControllers();
 
