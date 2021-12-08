@@ -17,11 +17,6 @@ namespace MoviesAPI.Services
             _mapper = mapper;
         }
 
-        /// <summary>
-        /// Creates a new movie in the database.
-        /// </summary>
-        /// <param name="createTheaterDto">Theater to be created.</param>
-        /// <returns>ReadTheaterDto from the created theater.</returns>
         public ReadTheaterDto CreateTheater(CreateTheaterDto createTheaterDto)
         {
             var theater = _mapper.Map<Theater>(createTheaterDto);
@@ -31,11 +26,6 @@ namespace MoviesAPI.Services
             return _mapper.Map<ReadTheaterDto>(theater);
         }
 
-        /// <summary>
-        /// Gets a list of theaters filtered by the given parameters.
-        /// </summary>
-        /// <param name="movieName">Movie name to be filtered.</param>
-        /// <returns>ReadTheaterDto list from the filtered theaters.</returns>
         public List<ReadTheaterDto>? GetTheaters(string movieName)
         {
             var theaters = _context.Theaters.ToList();
@@ -55,11 +45,6 @@ namespace MoviesAPI.Services
             return _mapper.Map<List<ReadTheaterDto>>(theaters);
         }
 
-        /// <summary>
-        /// Gets a theater by id.
-        /// </summary>
-        /// <param name="id">The theater id.</param>
-        /// <returns>ReateTheaterDto from the theater.</returns>
         public ReadTheaterDto? GetTheaterById(int id)
         {
             var theater = _context.Theaters.FirstOrDefault(theater => theater.Id == id);
@@ -69,12 +54,6 @@ namespace MoviesAPI.Services
             return _mapper.Map<ReadTheaterDto>(theater);
         }
 
-        /// <summary>
-        /// Updates a theater by id.
-        /// </summary>
-        /// <param name="id">The theater id.</param>
-        /// <param name="updateTheaterDto">Theater info to update.</param>
-        /// <returns>Operation result.</returns>
         public Result UpdateTheater(int id, UpdateTheaterDto updateTheaterDto)
         {
             var theater = _context.Theaters.FirstOrDefault(theater => theater.Id == id);
@@ -87,11 +66,6 @@ namespace MoviesAPI.Services
             return Result.Ok();
         }
 
-        /// <summary>
-        /// Deletes a theater by id.
-        /// </summary>
-        /// <param name="id">The movie id.</param>
-        /// <returns>Operation result.</returns>
         public Result DeleteTheater(int id)
         {
             var theater = _context.Theaters.FirstOrDefault(theater => theater.Id == id);
