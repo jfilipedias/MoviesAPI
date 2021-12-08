@@ -17,11 +17,6 @@ namespace MoviesAPI.Services
             _mapper = mapper;
         }
 
-        /// <summary>
-        /// Creates a new address in the database.
-        /// </summary>
-        /// <param name="createAddressDto">Address to be created.</param>
-        /// <returns>ReadAddressDto from the created address.</returns>
         public ReadAddressDto CreateAddress(CreateAddressDto createAddressDto)
         {
             var address = _mapper.Map<Address>(createAddressDto);
@@ -32,10 +27,6 @@ namespace MoviesAPI.Services
             return _mapper.Map<ReadAddressDto>(address);
         }
 
-        /// <summary>
-        /// Gets a list of address.
-        /// </summary>
-        /// <returns>ReadAddressDto list.</returns>
         public List<ReadAddressDto>? GetAddresses()
         {
             var addresses = _context.Addresses.ToList();
@@ -43,11 +34,6 @@ namespace MoviesAPI.Services
             return _mapper.Map<List<ReadAddressDto>>(addresses);
         }
 
-        /// <summary>
-        /// Gets an address by id.
-        /// </summary>
-        /// <param name="id">The address id.</param>
-        /// <returns>ReadAddressDto from the address.</returns>
         public ReadAddressDto? GetAddressById(int id)
         {
             var address = _context.Addresses.FirstOrDefault(address => address.Id == id);
@@ -57,12 +43,6 @@ namespace MoviesAPI.Services
             return _mapper.Map<ReadAddressDto>(address);
         }
 
-        /// <summary>
-        /// Updates an address by id.
-        /// </summary>
-        /// <param name="id">The address id.</param>
-        /// <param name="updateAddressDto">Address info to update.</param>
-        /// <returns>Operation result.</returns>
         public Result UpdateAddress(int id, UpdateAddressDto updateAddressDto)
         {
             var address = _context.Addresses.FirstOrDefault(address => address.Id == id);
@@ -75,11 +55,6 @@ namespace MoviesAPI.Services
             return Result.Ok();
         }
 
-        /// <summary>
-        /// Deletes an address by id.
-        /// </summary>
-        /// <param name="id">The address id.</param>
-        /// <returns>Operation result.</returns>
         public Result DeleteAddress(int id)
         {
             var address = _context.Addresses.FirstOrDefault(address => address.Id == id);
