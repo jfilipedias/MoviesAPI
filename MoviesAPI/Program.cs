@@ -10,6 +10,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingPro
 
 // Add services to the container.
 builder.Services.AddScoped<AddressService, AddressService>();
+builder.Services.AddScoped<ManagerService, ManagerService>();
 builder.Services.AddScoped<MovieService, MovieService>();
 builder.Services.AddScoped<TheaterService, TheaterService>();
 builder.Services.AddControllers();

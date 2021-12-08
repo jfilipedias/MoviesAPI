@@ -36,7 +36,7 @@ namespace MoviesAPI.Services
         /// Gets a list of address.
         /// </summary>
         /// <returns>ReadAddressDto list.</returns>
-        public List<ReadAddressDto> GetAddresses()
+        public List<ReadAddressDto>? GetAddresses()
         {
             var addresses = _context.Addresses.ToList();
 
@@ -46,7 +46,7 @@ namespace MoviesAPI.Services
         /// <summary>
         /// Gets an address by id.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">The address id.</param>
         /// <returns>ReadAddressDto from the address.</returns>
         public ReadAddressDto? GetAddressById(int id)
         {
