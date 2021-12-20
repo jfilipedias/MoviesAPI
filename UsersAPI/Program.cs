@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using UsersAPI.Data;
+using UsersAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,13 +13,28 @@ builder.Services.AddDbContext<UserDbContext>(options =>
 );
 
 // Add services to the container.
+builder.Services.AddScoped<RegisterService, RegisterService>();
 builder.Services.AddControllers();
 builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
     .AddEntityFrameworkStores<UserDbContext>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options => {
+    options.EnableAnnotations();
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Users API",
+        Description = "An API designed to manage Users.",
+        Version = "v1",
+        Contact = new OpenApiContact
+        {
+            Name = "Filipe Dias",
+            Email = "filipediascontato@gmail.com"
+        }
+    });
+});
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
