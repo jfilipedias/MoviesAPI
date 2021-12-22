@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using UsersAPI.Data.Dto;
+using UsersAPI.Data.Dtos;
 using UsersAPI.Services;
 
 namespace UsersAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [SwaggerTag("Create, read, update and delete user")]
+    [SwaggerTag("Create user")]
     public class RegisterController : ControllerBase
     {
         private RegisterService _registerService;

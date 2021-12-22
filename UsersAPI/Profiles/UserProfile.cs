@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using UsersAPI.Data.Dto;
+using UsersAPI.Data.Dtos;
 using UsersAPI.Models;
 
 namespace UsersAPI.Profiles
