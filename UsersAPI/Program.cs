@@ -14,6 +14,7 @@ builder.Services.AddDbContext<UserDbContext>(options =>
 
 // Add services to the container.
 builder.Services.AddScoped<RegisterService, RegisterService>();
+builder.Services.AddScoped<LoginService, LoginService>();
 builder.Services.AddControllers();
 builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
     .AddEntityFrameworkStores<UserDbContext>();
