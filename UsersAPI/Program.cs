@@ -18,9 +18,11 @@ builder.Services.AddScoped<LoginService, LoginService>();
 builder.Services.AddScoped<LogoutService, LogoutService>();
 builder.Services.AddScoped<TokenService, TokenService>();
 builder.Services.AddControllers().AddNewtonsoftJson();
-builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
-    .AddEntityFrameworkStores<UserDbContext>();
-
+builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(
+        options => options.SignIn.RequireConfirmedEmail = true
+    )
+    .AddEntityFrameworkStores<UserDbContext>()
+    .AddDefaultTokenProviders();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options => {

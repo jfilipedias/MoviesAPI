@@ -23,10 +23,11 @@ namespace UsersAPI.Services
             var identityUser = _mapper.Map<IdentityUser<int>>(user);
             var identityResult = _userManager.CreateAsync(identityUser, createUserDto.Password);
 
-            if (identityResult.Result.Succeeded)
-                return Result.Ok();
+            if (!identityResult.Result.Succeeded)
+                return Result.Fail("The user could not be created.");
 
-            return Result.Fail("The user could not be created.");
+            var code = _userManager.GenerateEmailConfirmationTokenAsync(identityUser).Result;
+            return Result.Ok().WithSuccess(code);
         }
     }
 }

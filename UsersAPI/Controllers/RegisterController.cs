@@ -19,7 +19,7 @@ namespace UsersAPI.Controllers
 
         [HttpPost(Name = "RegisterUser")]
         [SwaggerOperation(Summary = "Creates a new user.", Description = "Creates a new user.")]
-        [SwaggerResponse(201, "The user was created.")]
+        [SwaggerResponse(201, "The user was created.", typeof(List<FluentResults.ISuccess>))]
         [SwaggerResponse(500, "The user could not be created.")]
         public IActionResult RegisterUser(CreateUserDto createUserDto)
         {
@@ -28,7 +28,7 @@ namespace UsersAPI.Controllers
             if (result.IsFailed)
                 return StatusCode(500);
 
-            return Ok();
+            return Ok(result.Successes);
         }
     }
 }
