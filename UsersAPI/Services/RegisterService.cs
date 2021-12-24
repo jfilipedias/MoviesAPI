@@ -2,6 +2,7 @@
 using FluentResults;
 using Microsoft.AspNetCore.Identity;
 using UsersAPI.Data.Dtos;
+using UsersAPI.Data.Requests;
 using UsersAPI.Models;
 
 namespace UsersAPI.Services
@@ -28,6 +29,19 @@ namespace UsersAPI.Services
 
             var code = _userManager.GenerateEmailConfirmationTokenAsync(identityUser).Result;
             return Result.Ok().WithSuccess(code);
+        }
+
+        public Result ActivateUserAccount(ActivatesAccountRequest activatesAccountRequest)
+        {
+            var identityUser = _userManager
+                .Users
+                .FirstOrDefault(user => user.Id == activatesAccountRequest.UserId);
+            var identityResult = _userManager.ConfirmEmailAsync(identityUser, activatesAccountRequest.ActivationCode).Result;
+
+            if (identityResult.Succeeded)
+                return Result.Ok();
+
+            return Result.Fail("User account could not be activated.");
         }
     }
 }

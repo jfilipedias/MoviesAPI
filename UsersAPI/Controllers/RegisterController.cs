@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using UsersAPI.Data.Dtos;
+using UsersAPI.Data.Requests;
 using UsersAPI.Services;
 
 namespace UsersAPI.Controllers
@@ -24,6 +25,19 @@ namespace UsersAPI.Controllers
         public IActionResult RegisterUser(CreateUserDto createUserDto)
         {
             var result = _registerService.CreateUser(createUserDto);
+
+            if (result.IsFailed)
+                return StatusCode(500);
+
+            return Ok(result.Successes);
+        }
+        
+        [HttpPost("/Activates", Name = "ActivateUserAccount")]
+        [SwaggerResponse(201, "The user account was activated.", typeof(List<FluentResults.ISuccess>))]
+        [SwaggerResponse(500, "The user account could not be activated.")]
+        public IActionResult ActivateUserAccount(ActivatesAccountRequest activatesAccountRequest)
+        {
+            var result = _registerService.ActivateUserAccount(activatesAccountRequest);
 
             if (result.IsFailed)
                 return StatusCode(500);
