@@ -15,6 +15,7 @@ builder.Services.AddDbContext<UserDbContext>(options =>
 // Add services to the container.
 builder.Services.AddScoped<RegisterService, RegisterService>();
 builder.Services.AddScoped<LoginService, LoginService>();
+builder.Services.AddScoped<LogoutService, LogoutService>();
 builder.Services.AddScoped<TokenService, TokenService>();
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
