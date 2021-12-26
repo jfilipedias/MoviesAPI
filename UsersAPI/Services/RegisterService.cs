@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FluentResults;
 using Microsoft.AspNetCore.Identity;
+using System.Web;
 using UsersAPI.Data.Dtos;
 using UsersAPI.Data.Requests;
 using UsersAPI.Models;
@@ -11,11 +12,13 @@ namespace UsersAPI.Services
     {
         private IMapper _mapper;
         private UserManager<IdentityUser<int>> _userManager;
+        private EmailService _emailService;
 
-        public RegisterService(IMapper mapper, UserManager<IdentityUser<int>> userManager)
+        public RegisterService(IMapper mapper, UserManager<IdentityUser<int>> userManager, EmailService emailService)
         {
             _mapper = mapper;
             _userManager = userManager;
+            _emailService = emailService;
         }
 
         public Result CreateUser(CreateUserDto createUserDto)
@@ -27,8 +30,11 @@ namespace UsersAPI.Services
             if (!identityResult.Result.Succeeded)
                 return Result.Fail("The user could not be created.");
 
-            var code = _userManager.GenerateEmailConfirmationTokenAsync(identityUser).Result;
-            return Result.Ok().WithSuccess(code);
+            var emailConfirmationToken = _userManager.GenerateEmailConfirmationTokenAsync(identityUser).Result;
+            var encodedEmailConfirmationToken = HttpUtility.UrlEncode(emailConfirmationToken);
+
+            _emailService.SendEmail(new [] { user }, "Account activation link", identityUser.Id, encodedEmailConfirmationToken);
+            return Result.Ok();
         }
 
         public Result ActivateUserAccount(ActivatesAccountRequest activatesAccountRequest)

@@ -21,26 +21,26 @@ namespace UsersAPI.Controllers
         [HttpPost(Name = "RegisterUser")]
         [SwaggerOperation(Summary = "Creates a new user.", Description = "Creates a new user.")]
         [SwaggerResponse(201, "The user was created.", typeof(List<FluentResults.ISuccess>))]
-        [SwaggerResponse(500, "The user could not be created.")]
+        [SwaggerResponse(500, "The user could not be created.", typeof(List<FluentResults.IError>))]
         public IActionResult RegisterUser(CreateUserDto createUserDto)
         {
             var result = _registerService.CreateUser(createUserDto);
 
             if (result.IsFailed)
-                return StatusCode(500);
+                return StatusCode(500, result.Errors);
 
             return Ok(result.Successes);
         }
         
-        [HttpPost("/Activates", Name = "ActivateUserAccount")]
+        [HttpGet("/Activates", Name = "ActivateUserAccount")]
         [SwaggerResponse(201, "The user account was activated.", typeof(List<FluentResults.ISuccess>))]
-        [SwaggerResponse(500, "The user account could not be activated.")]
-        public IActionResult ActivateUserAccount(ActivatesAccountRequest activatesAccountRequest)
+        [SwaggerResponse(500, "The user account could not be activated.", typeof(List<FluentResults.IError>))]
+        public IActionResult ActivateUserAccount([FromQuery]ActivatesAccountRequest activatesAccountRequest)
         {
             var result = _registerService.ActivateUserAccount(activatesAccountRequest);
 
             if (result.IsFailed)
-                return StatusCode(500);
+                return StatusCode(500, result.Errors);
 
             return Ok(result.Successes);
         }
