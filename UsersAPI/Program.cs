@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using UsersAPI.Data;
+using UsersAPI.Providers;
 using UsersAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,15 +14,14 @@ builder.Services.AddDbContext<UserDbContext>(options =>
 );
 
 // Add services to the container.
-builder.Services.AddScoped<EmailService, EmailService>();
+builder.Services.AddScoped<IEmailProvider, MailKitEmailProvider>();
 builder.Services.AddScoped<LoginService, LoginService>();
 builder.Services.AddScoped<LogoutService, LogoutService>();
 builder.Services.AddScoped<RegisterService, RegisterService>();
 builder.Services.AddScoped<TokenService, TokenService>();
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(
-        options => options.SignIn.RequireConfirmedEmail = true
-    )
+        options => options.SignIn.RequireConfirmedEmail = true)
     .AddEntityFrameworkStores<UserDbContext>()
     .AddDefaultTokenProviders();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

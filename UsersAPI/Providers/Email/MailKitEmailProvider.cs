@@ -2,20 +2,19 @@
 using MimeKit;
 using UsersAPI.Models;
 
-namespace UsersAPI.Services
+namespace UsersAPI.Providers
 {
-    public class EmailService
+    public class MailKitEmailProvider : IEmailProvider
     {
         private IConfiguration _configuration;
 
-        public EmailService(IConfiguration configuration)
+        public MailKitEmailProvider(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        public void SendEmail(User[] users, string subject, int userId, string emailConfirmationToken)
+        public void SendEmail(Message message)
         {
-            var message = new Message(users, subject, userId, emailConfirmationToken);
             var emailMessage = CreateEmailBody(message);
             Send(emailMessage);
         }
@@ -23,10 +22,10 @@ namespace UsersAPI.Services
         private void Send(MimeMessage emailMessage)
         {
             var client = new SmtpClient();
-            
+
             try
             {
-                client.Connect(_configuration.GetValue<string>("EmailSettings:SmtpServer"), 
+                client.Connect(_configuration.GetValue<string>("EmailSettings:SmtpServer"),
                     _configuration.GetValue<int>("EmailSettings:Port"), true);
                 client.AuthenticationMechanisms.Remove("XOUATH2");
                 client.Authenticate(_configuration.GetValue<string>("EmailSettings:From"),
@@ -47,10 +46,14 @@ namespace UsersAPI.Services
 
         private MimeMessage CreateEmailBody(Message message)
         {
+            var from = new MailboxAddress(_configuration.GetValue<string>("EmailSettings:Name"), 
+                _configuration.GetValue<string>("EmailSettings:From"));
+            
+            var to = message.To.Select(user => new MailboxAddress(user.Username, user.Email));
+            
             var emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress(_configuration.GetValue<string>("EmailSettings:Name"), 
-                _configuration.GetValue<string>("EmailSettings:From")));
-            emailMessage.To.AddRange(message.To);
+            emailMessage.From.Add(from);
+            emailMessage.To.AddRange(to);
             emailMessage.Subject = message.Subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text)
             {

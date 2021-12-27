@@ -5,20 +5,21 @@ using System.Web;
 using UsersAPI.Data.Dtos;
 using UsersAPI.Data.Requests;
 using UsersAPI.Models;
+using UsersAPI.Providers.Email;
 
 namespace UsersAPI.Services
 {
     public class RegisterService
     {
         private IMapper _mapper;
+        private IEmailProvider _emailProvider;
         private UserManager<IdentityUser<int>> _userManager;
-        private EmailService _emailService;
 
-        public RegisterService(IMapper mapper, UserManager<IdentityUser<int>> userManager, EmailService emailService)
+        public RegisterService(IMapper mapper, IEmailProvider emailProvider, UserManager<IdentityUser<int>> userManager)
         {
             _mapper = mapper;
+            _emailProvider = emailProvider;
             _userManager = userManager;
-            _emailService = emailService;
         }
 
         public Result CreateUser(CreateUserDto createUserDto)
@@ -32,8 +33,10 @@ namespace UsersAPI.Services
 
             var emailConfirmationToken = _userManager.GenerateEmailConfirmationTokenAsync(identityUser).Result;
             var encodedEmailConfirmationToken = HttpUtility.UrlEncode(emailConfirmationToken);
+            var message = new Message(new[] { user }, "Account activation code", identityUser.Id, encodedEmailConfirmationToken);
 
-            _emailService.SendEmail(new [] { user }, "Account activation link", identityUser.Id, encodedEmailConfirmationToken);
+            _emailProvider.SendEmail(message);
+            
             return Result.Ok();
         }
 
