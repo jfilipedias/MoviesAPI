@@ -30,3 +30,24 @@ $ dotnet user-secrets set "EmailSettings:Name" "YourEmailServiceName"
 $ dotnet user-secrets set "EmailSettings:From" "yourprovideremailname@gmail.com"
 ```
 
+## Database Setups
+Execute the docker compose in the project root:
+
+``` bash
+# Ensure that you're in the project root directory
+# Execute the command
+$ docker-compose up -d
+```
+
+## Run Migrations
+Will be needed to run the migrations for `AppDbContext` and the `UserDbContext` in the **Package Manager Console**:
+
+``` bash
+# Ensure that you're with the MoviesAPI project selected
+# Execute the command to AppDbContext
+$ Update-Database
+
+# Ensure that you're with the UsersAPI project selected
+# Execute the command to UserDbContext
+$ Update-Database
+```
