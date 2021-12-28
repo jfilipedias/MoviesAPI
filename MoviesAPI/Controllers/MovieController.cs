@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MoviesAPI.Data.Dtos;
 using MoviesAPI.Services;
 using Swashbuckle.AspNetCore.Annotations;
@@ -17,6 +18,7 @@ namespace MoviesAPI.Controllers
             _movieService = movieService;
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost(Name = "CreateMovie")]
         [SwaggerOperation(Summary = "Creates a new movie.", Description = "Creates a new movie.")]
         [SwaggerResponse(201, "The movie was created.", typeof(ReadMovieDto))]

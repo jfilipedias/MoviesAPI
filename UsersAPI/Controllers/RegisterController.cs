@@ -25,7 +25,7 @@ namespace UsersAPI.Controllers
         [SwaggerResponse(500, "The user could not be created.", typeof(List<IError>))]
         public IActionResult RegisterUser(CreateUserDto createUserDto)
         {
-            var result = _registerService.CreateUser(createUserDto);
+            var result = _registerService.RegisterUser(createUserDto);
 
             if (result.IsFailed)
                 return StatusCode(500, result.Errors);

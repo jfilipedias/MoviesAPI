@@ -11,24 +11,28 @@ namespace UsersAPI.Services
 {
     public class RegisterService
     {
-        private IMapper _mapper;
         private IEmailProvider _emailProvider;
+        private IMapper _mapper;
+        private RoleManager<IdentityRole<int>> _roleManager;
         private UserManager<IdentityUser<int>> _userManager;
 
-        public RegisterService(IMapper mapper, IEmailProvider emailProvider, UserManager<IdentityUser<int>> userManager)
+        public RegisterService(IEmailProvider emailProvider, IMapper mapper, RoleManager<IdentityRole<int>> roleManager, UserManager<IdentityUser<int>> userManager)
         {
-            _mapper = mapper;
             _emailProvider = emailProvider;
+            _mapper = mapper;
+            _roleManager = roleManager;
             _userManager = userManager;
         }
 
-        public Result CreateUser(CreateUserDto createUserDto)
+        public Result RegisterUser(CreateUserDto createUserDto)
         {
             var user = _mapper.Map<User>(createUserDto);
             var identityUser = _mapper.Map<IdentityUser<int>>(user);
-            var identityResult = _userManager.CreateAsync(identityUser, createUserDto.Password);
+            var userResult = _userManager.CreateAsync(identityUser, createUserDto.Password).Result;
+            var roleResult = _roleManager.CreateAsync(new IdentityRole<int>("admin")).Result;
+            var userRoleResult = _userManager.AddToRoleAsync(identityUser, "admin").Result;
 
-            if (!identityResult.Result.Succeeded)
+            if (!userResult.Succeeded)
                 return Result.Fail("The user could not be created.");
 
             var emailConfirmationToken = _userManager.GenerateEmailConfirmationTokenAsync(identityUser).Result;
