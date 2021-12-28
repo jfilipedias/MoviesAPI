@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentResults;
+using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using UsersAPI.Data.Dtos;
 using UsersAPI.Data.Requests;
@@ -20,8 +21,8 @@ namespace UsersAPI.Controllers
 
         [HttpPost(Name = "RegisterUser")]
         [SwaggerOperation(Summary = "Creates a new user.", Description = "Creates a new user.")]
-        [SwaggerResponse(201, "The user was created.", typeof(List<FluentResults.ISuccess>))]
-        [SwaggerResponse(500, "The user could not be created.", typeof(List<FluentResults.IError>))]
+        [SwaggerResponse(201, "The user was created.", typeof(List<ISuccess>))]
+        [SwaggerResponse(500, "The user could not be created.", typeof(List<IError>))]
         public IActionResult RegisterUser(CreateUserDto createUserDto)
         {
             var result = _registerService.CreateUser(createUserDto);
@@ -32,9 +33,9 @@ namespace UsersAPI.Controllers
             return Ok(result.Successes);
         }
         
-        [HttpGet("/Activates", Name = "ActivateUserAccount")]
-        [SwaggerResponse(201, "The user account was activated.", typeof(List<FluentResults.ISuccess>))]
-        [SwaggerResponse(500, "The user account could not be activated.", typeof(List<FluentResults.IError>))]
+        [HttpGet("/activates", Name = "ActivateUserAccount")]
+        [SwaggerResponse(201, "The user account was activated.", typeof(List<ISuccess>))]
+        [SwaggerResponse(500, "The user account could not be activated.", typeof(List<IError>))]
         public IActionResult ActivateUserAccount([FromQuery]ActivatesAccountRequest activatesAccountRequest)
         {
             var result = _registerService.ActivateUserAccount(activatesAccountRequest);

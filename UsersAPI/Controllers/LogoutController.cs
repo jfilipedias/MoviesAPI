@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using UsersAPI.Services;
@@ -19,7 +19,7 @@ namespace UsersAPI.Controllers
 
         [HttpPost(Name = "Logout user")]
         [SwaggerOperation(Summary = "Finishes the user session.", Description = "Finishes the user session.")]
-        [SwaggerResponse(200, "The given user has been logouted.", typeof(List<FluentResults.ISuccess>))]
+        [SwaggerResponse(200, "The given user has been logouted.", typeof(List<ISuccess>))]
         public IActionResult LogoutUser()
         {
             var result = _logoutService.LogoutUser();
