@@ -45,5 +45,23 @@ namespace UsersAPI.Controllers
 
             return Ok(result.Successes);
         }
+
+        [HttpPost("/reset-password", Name = "Reset password")]
+        [SwaggerOperation(Summary = "Reset the user password.", Description = "Reset the user password.")]
+        [SwaggerResponse(200, "The password was successfully reseted.", typeof(List<ISuccess>))]
+        [SwaggerResponse(401, "The given user was not authorized.", typeof(List<IError>))]
+        [SwaggerResponse(500, "The  cannot be reseted.", typeof(List<IError>))]
+        public IActionResult ResetPassword(ResetPasswordRequest resetPasswordRequest)
+        {
+            var result = _loginService.ResetPassword(resetPasswordRequest);
+
+            if (!result.IsFailed)
+                return Ok(result.Successes);
+            else if (result.HasError(error => error.HasMetadataKey("Unauthorized")))
+                return Unauthorized(result.Errors);
+            else
+                return StatusCode(500, result.Errors);
+
+        }
     }
 }
