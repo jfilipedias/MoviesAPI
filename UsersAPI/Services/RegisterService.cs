@@ -5,7 +5,7 @@ using System.Web;
 using UsersAPI.Data.Dtos;
 using UsersAPI.Data.Requests;
 using UsersAPI.Models;
-using UsersAPI.Providers.Email;
+using UsersAPI.Providers;
 
 namespace UsersAPI.Services
 {
