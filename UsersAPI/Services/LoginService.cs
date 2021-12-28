@@ -28,11 +28,22 @@ namespace UsersAPI.Services
                     .FirstOrDefault(user => user.NormalizedUserName == request.UserName.ToUpper());
 
                 var token = _tokenService.CreateToken(identityUser);
-
                 return Result.Ok().WithSuccess(token.Value);
             }
 
-            return Result.Fail("User was not authorized.");
+            return Result.Fail("Unauthorized user.");
+        }
+
+        public Result RequireResetPassword(RequireResetPasswordRequest resetPasswordRequest)
+        {
+            var identityUser = GetUserByEmail(resetPasswordRequest.Email);
+
+            if (identityUser == null)
+                return Result.Fail("Unauthorized user.");
+
+            var passwordResetToken = _signInManager.UserManager.GeneratePasswordResetTokenAsync(identityUser).Result;
+            return Result.Ok().WithSuccess(passwordResetToken);
+        }
         }
     }
 }
