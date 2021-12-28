@@ -29,8 +29,8 @@ namespace UsersAPI.Services
             var user = _mapper.Map<User>(createUserDto);
             var identityUser = _mapper.Map<IdentityUser<int>>(user);
             var userResult = _userManager.CreateAsync(identityUser, createUserDto.Password).Result;
-            var roleResult = _roleManager.CreateAsync(new IdentityRole<int>("admin")).Result;
-            var userRoleResult = _userManager.AddToRoleAsync(identityUser, "admin").Result;
+            
+            _userManager.AddToRoleAsync(identityUser, "regular");
 
             if (!userResult.Succeeded)
                 return Result.Fail("The user could not be created.");

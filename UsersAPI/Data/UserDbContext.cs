@@ -33,11 +33,13 @@ namespace UsersAPI.Data
                 _configuration.GetValue<string>("AdminInfo:Password"));
 
             var adminRole = new IdentityRole<int> { Id = 9999, Name = "admin", NormalizedName = "ADMIN" };
-            var userRole = new IdentityUserRole<int> { RoleId = adminRole.Id, UserId = adminUser.Id };
+            var regularRole = new IdentityRole<int> { Id = 9998, Name = "regular", NormalizedName = "REGULAR" };
+            var identityUserRole = new IdentityUserRole<int> { RoleId = adminRole.Id, UserId = adminUser.Id };
 
             builder.Entity<IdentityUser<int>>().HasData(adminUser);
             builder.Entity<IdentityRole<int>>().HasData(adminRole);
-            builder.Entity<IdentityUserRole<int>>().HasData(userRole);
+            builder.Entity<IdentityRole<int>>().HasData(regularRole);
+            builder.Entity<IdentityUserRole<int>>().HasData(identityUserRole);
         }
     }
 }
