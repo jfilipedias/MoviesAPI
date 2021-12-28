@@ -11,20 +11,6 @@
       - POSTGRES_DB=MoviesDB
     volumes:
       - pgdata:/data/postgres
-      
-  api: 
-    build: .
-    container_name: movies_api
-    restart: always
-    ports: 
-      - 443:443
-      - 80:80
-    volumes:
-      - .:/usr/app
-    links:
-      - database
-    depends_on: 
-      - database
 
 volumes:
   pgdata:
