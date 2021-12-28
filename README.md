@@ -1,30 +1,32 @@
 # MoviesAPI
+A theater API build with .NET 6
 
-A simple movie API example build with .NET 6
-
-## Project setup
-
-To run the UsersAPI project, will be needed to setups the project `user-secrets` related to the email provider:
+## Project Setup
+To run the UsersAPI project, will be needed to setups the project `user-secrets`:
 
 ``` bash
 # Ensure that you're in the UsersAPI project directory
-$ cd UsersAPI
-
 # Initialize user-secrets
 $ dotnet user-secrets init
 
-# Setup the SmtpServer secret
+# Secret to the admin seed
+# Setup the AdminInfo:Password
+$ dotnet user-secrets set "AdminInfo:Password" "Admin123456!"
+
+# Secrets to the email provider
+# Setup the EmailSettings:SmtpServer secret
 $ dotnet user-secrets set "EmailSettings:SmtpServer" "smtp.gmail.com"
 
-# Setup the Port secret
+# Setup the EmailSettings:Port secret
 $ dotnet user-secrets set "EmailSettings:Port" "465"
 
-# Setup the Password secret
-$ dotnet user-secrets set "EmailSettings:Password" "GenericPassword123!"
+# Setup the EmailSettings:Password secret
+$ dotnet user-secrets set "EmailSettings:Password" "YourPassword123456!"
 
-# Setup the Name secret
-$ dotnet user-secrets set "EmailSettings:Name" "EmailServiceName"
+# Setup the EmailSettings:Name secret
+$ dotnet user-secrets set "EmailSettings:Name" "YourEmailServiceName"
 
-# Setup the From secret
-$ dotnet user-secrets set "EmailSettings:From" "provideremailname@gmail.com"
+# Setup the EmailSettings:From secret
+$ dotnet user-secrets set "EmailSettings:From" "yourprovideremailname@gmail.com"
 ```
+

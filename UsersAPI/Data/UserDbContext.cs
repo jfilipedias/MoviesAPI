@@ -6,8 +6,11 @@ namespace UsersAPI.Data
 {
     public class UserDbContext : IdentityDbContext<IdentityUser<int>, IdentityRole<int>, int>
     {
-        public UserDbContext(DbContextOptions<UserDbContext> options) : base(options)
+        private IConfiguration _configuration;
+
+        public UserDbContext(DbContextOptions<UserDbContext> options, IConfiguration configuration) : base(options)
         {
+            _configuration = configuration;
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -26,7 +29,8 @@ namespace UsersAPI.Data
             };
 
             var passwordHasher = new PasswordHasher<IdentityUser<int>>();
-            adminUser.PasswordHash = passwordHasher.HashPassword(adminUser, "Admin123456!");
+            adminUser.PasswordHash = passwordHasher.HashPassword(adminUser, 
+                _configuration.GetValue<string>("AdminInfo:Password"));
 
             var adminRole = new IdentityRole<int> { Id = 9999, Name = "admin", NormalizedName = "ADMIN" };
             var userRole = new IdentityUserRole<int> { RoleId = adminRole.Id, UserId = adminUser.Id };
