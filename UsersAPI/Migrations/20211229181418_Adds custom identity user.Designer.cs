@@ -190,7 +190,7 @@ namespace UsersAPI.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("BirthDate")
+                    b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -253,7 +253,7 @@ namespace UsersAPI.Migrations
                         {
                             Id = 9999,
                             AccessFailedCount = 0,
-                            BirthDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ConcurrencyStamp = "e720c0b7-8136-427b-b082-a0556275f8fd",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,

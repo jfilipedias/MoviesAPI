@@ -10,7 +10,7 @@ namespace UsersAPI.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<DateTime>(
-                name: "BirthDate",
+                name: "DateOfBirth",
                 table: "AspNetUsers",
                 type: "timestamp with time zone",
                 nullable: false,
@@ -41,7 +41,7 @@ namespace UsersAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "BirthDate",
+                name: "DateOfBirth",
                 table: "AspNetUsers");
 
             migrationBuilder.UpdateData(

@@ -20,6 +20,6 @@ namespace UsersAPI.Data.Dtos
         public string RePassword { get; set; }
     
         [Required]
-        public DateTime BirthDate { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 }
