@@ -31,7 +31,7 @@ namespace MoviesAPI.Controllers
         }
 
         [HttpGet(Name = "GetMovies")]
-        [Authorize(Roles = "admin, regular")]
+        [Authorize(Roles = "admin, regular", Policy = "MinimumAge")]
         [SwaggerOperation(Summary = "Gets a movies list.", Description = "Gets a movies list filtered by the given parameters.")]
         [SwaggerResponse(200, "The filtered movies have been listed.", typeof(List<ReadMovieDto>))]
         [SwaggerResponse(404, "Was not found a movie with the given parameters.")]

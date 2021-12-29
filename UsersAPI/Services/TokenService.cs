@@ -9,13 +9,14 @@ namespace UsersAPI.Services
 {
     public class TokenService
     {
-        public Token CreateToken(IdentityUser<int> identityUser, string userRole)
+        public Token CreateToken(CustomIdentityUser<int> user, string userRole)
         {
             var userClaims = new Claim[]
             {
-                new Claim("id", identityUser.Id.ToString()),
-                new Claim("username", identityUser.UserName),
-                new Claim(ClaimTypes.Role, userRole)
+                new Claim("id", user.Id.ToString()),
+                new Claim("username", user.UserName),
+                new Claim(ClaimTypes.Role, userRole),
+                new Claim(ClaimTypes.DateOfBirth, user.DateOfBirth.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("0asdjas09djsa09djdsadjsadjsadjsd09asjd09sajcnzxn"));
