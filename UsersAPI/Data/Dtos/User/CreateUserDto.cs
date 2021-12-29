@@ -15,7 +15,11 @@ namespace UsersAPI.Data.Dtos
         public string Password { get; set; }
 
         [Required]
+        [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "The passwords does not match.")]
-        public string Repassword { get; set; }
+        public string RePassword { get; set; }
+    
+        [Required]
+        public DateTime BirthDate { get; set; }
     }
 }

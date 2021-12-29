@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using UsersAPI.Models;
 
 namespace UsersAPI.Data
 {
-    public class UserDbContext : IdentityDbContext<IdentityUser<int>, IdentityRole<int>, int>
+    public class UserDbContext : IdentityDbContext<CustomIdentityUser<int>, IdentityRole<int>, int>
     {
         private IConfiguration _configuration;
 
@@ -17,7 +18,7 @@ namespace UsersAPI.Data
         {
             base.OnModelCreating(builder);
 
-            var adminUser = new IdentityUser<int>
+            var adminUser = new CustomIdentityUser<int>
             {
                 UserName = "admin",
                 NormalizedUserName = "ADMIN",
@@ -28,7 +29,7 @@ namespace UsersAPI.Data
                 Id = 9999
             };
 
-            var passwordHasher = new PasswordHasher<IdentityUser<int>>();
+            var passwordHasher = new PasswordHasher<CustomIdentityUser<int>>();
             adminUser.PasswordHash = passwordHasher.HashPassword(adminUser, 
                 _configuration.GetValue<string>("AdminInfo:Password"));
 
@@ -36,7 +37,7 @@ namespace UsersAPI.Data
             var regularRole = new IdentityRole<int> { Id = 9998, Name = "regular", NormalizedName = "REGULAR" };
             var identityUserRole = new IdentityUserRole<int> { RoleId = adminRole.Id, UserId = adminUser.Id };
 
-            builder.Entity<IdentityUser<int>>().HasData(adminUser);
+            builder.Entity<CustomIdentityUser<int>>().HasData(adminUser);
             builder.Entity<IdentityRole<int>>().HasData(adminRole);
             builder.Entity<IdentityRole<int>>().HasData(regularRole);
             builder.Entity<IdentityUserRole<int>>().HasData(identityUserRole);

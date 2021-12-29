@@ -1,15 +1,16 @@
 ﻿using FluentResults;
 using Microsoft.AspNetCore.Identity;
 using UsersAPI.Data.Requests;
+using UsersAPI.Models;
 
 namespace UsersAPI.Services
 {
     public class LoginService
     {
-        private SignInManager<IdentityUser<int>> _signInManager;
+        private SignInManager<CustomIdentityUser<int>> _signInManager;
         private TokenService _tokenService;
 
-        public LoginService(SignInManager<IdentityUser<int>> signInManager, TokenService tokenService)
+        public LoginService(SignInManager<CustomIdentityUser<int>> signInManager, TokenService tokenService)
         {
             _signInManager = signInManager;
             _tokenService = tokenService;
@@ -66,11 +67,10 @@ namespace UsersAPI.Services
             if (identityResult.Succeeded)
                 return Result.Ok().WithSuccess("The password was successfully reseted.");
 
-
             return Result.Fail(new Error("The password cannot be reseted.").WithMetadata("ServerError", "500"));
         }
 
-        private IdentityUser<int>? GetUserByEmail(string email)
+        private CustomIdentityUser<int>? GetUserByEmail(string email)
         {
             return _signInManager
                 .UserManager

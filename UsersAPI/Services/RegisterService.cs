@@ -13,31 +13,29 @@ namespace UsersAPI.Services
     {
         private IEmailProvider _emailProvider;
         private IMapper _mapper;
-        private RoleManager<IdentityRole<int>> _roleManager;
-        private UserManager<IdentityUser<int>> _userManager;
+        private UserManager<CustomIdentityUser<int>> _userManager;
 
-        public RegisterService(IEmailProvider emailProvider, IMapper mapper, RoleManager<IdentityRole<int>> roleManager, UserManager<IdentityUser<int>> userManager)
+        public RegisterService(IEmailProvider emailProvider, IMapper mapper, UserManager<CustomIdentityUser<int>> userManager)
         {
             _emailProvider = emailProvider;
             _mapper = mapper;
-            _roleManager = roleManager;
             _userManager = userManager;
         }
 
         public Result RegisterUser(CreateUserDto createUserDto)
         {
             var user = _mapper.Map<User>(createUserDto);
-            var identityUser = _mapper.Map<IdentityUser<int>>(user);
-            var userResult = _userManager.CreateAsync(identityUser, createUserDto.Password).Result;
+            var customIdentityUser = _mapper.Map<CustomIdentityUser<int>>(user);
+            var userResult = _userManager.CreateAsync(customIdentityUser, createUserDto.Password).Result;
             
-            _userManager.AddToRoleAsync(identityUser, "regular");
+            _userManager.AddToRoleAsync(customIdentityUser, "regular");
 
             if (!userResult.Succeeded)
                 return Result.Fail("The user could not be created.");
 
-            var emailConfirmationToken = _userManager.GenerateEmailConfirmationTokenAsync(identityUser).Result;
+            var emailConfirmationToken = _userManager.GenerateEmailConfirmationTokenAsync(customIdentityUser).Result;
             var encodedEmailConfirmationToken = HttpUtility.UrlEncode(emailConfirmationToken);
-            var message = new Message(new[] { user }, "Account activation code", identityUser.Id, encodedEmailConfirmationToken);
+            var message = new Message(new[] { user }, "Account activation code", customIdentityUser.Id, encodedEmailConfirmationToken);
 
             _emailProvider.SendEmail(message);
             
@@ -46,10 +44,11 @@ namespace UsersAPI.Services
 
         public Result ActivateUserAccount(ActivatesAccountRequest activatesAccountRequest)
         {
-            var identityUser = _userManager
+            var customIdentityUser = _userManager
                 .Users
                 .FirstOrDefault(user => user.Id == activatesAccountRequest.UserId);
-            var identityResult = _userManager.ConfirmEmailAsync(identityUser, activatesAccountRequest.ActivationCode).Result;
+
+            var identityResult = _userManager.ConfirmEmailAsync(customIdentityUser, activatesAccountRequest.ActivationCode).Result;
 
             if (identityResult.Succeeded)
                 return Result.Ok();

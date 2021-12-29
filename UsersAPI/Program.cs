@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using UsersAPI.Data;
+using UsersAPI.Models;
 using UsersAPI.Providers;
 using UsersAPI.Services;
 
@@ -20,7 +21,7 @@ builder.Services.AddScoped<LogoutService, LogoutService>();
 builder.Services.AddScoped<RegisterService, RegisterService>();
 builder.Services.AddScoped<TokenService, TokenService>();
 builder.Services.AddControllers().AddNewtonsoftJson();
-builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(
+builder.Services.AddIdentity<CustomIdentityUser<int>, IdentityRole<int>>(
         options => options.SignIn.RequireConfirmedEmail = true)
     .AddEntityFrameworkStores<UserDbContext>()
     .AddDefaultTokenProviders();
